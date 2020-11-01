@@ -1,20 +1,32 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import './custom.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+export default class StaticWebsite {
+    static generate(option){
+        return `<!DOCTYPE html>
+<html lang="${option && option.lang || "en"}">
+    <head>
+        <meta name="description" content="${option && option.description || ""}">
+        <meta name="author" content="${option && option.author || ""}">
+        ${Opengraph.generate(option.opengraph)}
+                <meta property="og:title" content="論語" data-react-helmet="true">
+                <meta property="og:type" content="website" data-react-helmet="true">
+                <meta property="og:url" content="https://novemberizing.github.io/?book=%E8%AB%96%E8%AA%9E&amp;category=%E5%AD%B8%E8%80%8C&amp;section=%E5%AD%B8%E8%80%8C%E6%99%82%E7%BF%92%E4%B9%8B" data-react-helmet="true">
+                <meta property="og:image" content="https://novemberizing.github.io/example.png" data-react-helmet="true">
+                
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+                <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+                <title>NOVEMBERIZING - ORIENTALISM</title>
+                
+            </head>
+            <body>
+                <div id="root"></div>
+            </body>
+        </html>
+        `
+    }
+}
 
-import Root from './root';
-
-console.log('hello novemberizing orientalism');
-
-library.add(fab);
-library.add(fas);
-
-ReactDOM.render(<Root />, document.getElementById('root'));
 
 
