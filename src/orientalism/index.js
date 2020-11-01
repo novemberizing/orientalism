@@ -14,11 +14,11 @@ export default class OrientalismView extends React.Component {
 
         return (
             <div className="row h-100 m-0 p-0 my-auto d-flex">
-                <Opengraph title={query.book}
+                {/* <Opengraph title={query.book}
                            type="website"
                            url={`https://novemberizing.github.io/${this.props.location.search}`}
                            image={`https://novemberizing.github.io/example.png`}>
-                </Opengraph>
+                </Opengraph> */}
                 <div className="col-lg-8 col-md-12 px-0">
                     <div className="row">
                         <div className="col-2 pr-0">
