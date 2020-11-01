@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -30,6 +31,11 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
             inject: true
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'static' }
+            ]
         }),
         new webpack.HotModuleReplacementPlugin()
     ],
