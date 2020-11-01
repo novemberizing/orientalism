@@ -9,6 +9,7 @@ export default class Root extends React.Component {
             <div className="all">
                 <Router>
                     <Route exact path="/" component={OrientalismView} />
+                    <Route exact path="/orientalism" component={OrientalismView} />
                 </Router>
             </div>
         );
