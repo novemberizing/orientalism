@@ -11,6 +11,9 @@
     "dev": "webpack serve --config config/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "novemberizing-website-gen": "bin/novemberizing-website-gen"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/novemberizing/orientalism.git"
@@ -33,6 +36,7 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.0",
+    "esm": "^3.2.25",
     "file-loader": "^6.2.0",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.5.0",

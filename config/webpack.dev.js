@@ -22,8 +22,8 @@ module.exports = {
         hot: true,
         host: '0.0.0.0',
         port: 8081,
-        publicPath: '/orientalism',
-        contentBasePublicPath: '/orientalism',
+        publicPath: '/',
+        contentBasePublicPath: '/',
         disableHostCheck: true
     },
     plugins: [
