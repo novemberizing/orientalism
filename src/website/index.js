@@ -6,11 +6,16 @@
 
 import Opengraph from "./meta/opengraph";
 import Twitter from "./meta/twitter";
-import Orientalism from "./orientalism";
 
 export default class Website {
+    static __publicPath = "http://localhost/orientalism";
+
     static get publicPath() {
-        return "http://localhost/orientalism";
+        return Website.__publicPath;
+    }
+
+    static set publicPath(o) {
+        Website.__publicPath = o;
     }
 
     static meta(o, twitter, opengraph) {
@@ -82,3 +87,5 @@ export default class Website {
         return html;
     }
 }
+
+// Website.__publicPath = 'http://localhost/orientalism';
