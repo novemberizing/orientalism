@@ -3,6 +3,8 @@
 require = require('esm')(module /*, options*/);
 const Website = require('../src/website').default;
 
+console.log(process.argv);
+
 const __example = {
     lang: "en",
     description: "description",
@@ -38,3 +40,5 @@ console.log(Website);
 console.log(Website.gen(__example));
 
 console.log('hello world');
+
+// READ JSON 
