@@ -129,6 +129,6 @@ export default class Twitter {
         <meta name="twitter:title" content="${this._title}">
         <meta name="twitter:description" content="${this._description}">`;
 
-        return prefix + this._card.html();
+        return prefix + this._card.html().trim();
     }
 }

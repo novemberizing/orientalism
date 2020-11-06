@@ -55,13 +55,13 @@ export default class Orientalism {
                         <div className="row text-right">
                             <div className="col-12 text-right">
                                 <a href="/orientalism" className="text-secondary">
-                                    <FontAwesomeIcon icon={["fab", "twitter"]} fixedWidth size="lg" />
+                                    <i class="fab fa-twitter fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" className="text-secondary">
-                                    <FontAwesomeIcon icon={["fab", "google"]} fixedWidth size="lg" />
+                                    <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" className="text-secondary">
-                                    <FontAwesomeIcon icon={["fas", "heart"]} fixedWidth size="lg" />
+                                    <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                             </div>
                         </div>

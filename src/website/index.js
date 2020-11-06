@@ -56,8 +56,8 @@ export default class Website {
                                .map(o => `${o}="${attributes[o]}"`)
                                .join(' ');
 
-            return `<link ${tags}></link>\n`;
-        }).concat();
+            return `        <link ${tags}></link>`;
+        }).join('\n').trim();
     }
 
     static gen(meta, styles, scripts, generator) {

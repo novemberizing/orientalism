@@ -55,7 +55,7 @@ export default class Opengraph {
 
         o += ((this._sitename && `        <meta property="og:site_name" content="${this._sitename}">\n`) || '');
 
-        o += this._data.html();
+        o += this._data.html().trim();
 
         return o;
     }
