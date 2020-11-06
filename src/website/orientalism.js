@@ -1,20 +1,6 @@
 import Mustache from 'mustache';
-import fs from 'fs';
-
-import Website from '../website';
 
 export default class Orientalism {
-
-    static html(o) {
-        const input = Object.assign(JSON.parse(fs.readFileSync("./global.json")), o);
-        const twitter = JSON.parse(fs.readFileSync("./twitter.json"));
-        const opengraph = JSON.parse(fs.readFileSync("./opengraph.json"));
-        const scripts = JSON.parse(fs.readFileSync("./scripts.json"));
-        const styles = JSON.parse(fs.readFileSync("./styles.json"));
-        
-        return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, Orientalism);
-    }
-
     static body(meta) {
         const data = {
             book: meta.book,
@@ -73,12 +59,3 @@ export default class Orientalism {
     </body>`, data);
     }
 }
-
-console.log(Orientalism.html({
-    content: '學而時習之 不亦說乎 有朋自遠方來 不亦樂乎 人不知而不慍 不亦君子乎',
-    prefix: '子曰',
-    description: '공자가 말씀하시기를, 이미 배운 것을 때때로 반복하여 복습하면 이 또한 기쁜 일이 아니겠는가? 뜻을 같이 하는 친구가 있어 멀리서 찾아온다면 이 또한 즐거운 일이 아니겠는가? 다른 사람이 나의 학문과 능력을 알아주지 않아도 화를 내지 않으면 이 또한 수양을 쌓은 군자라 하지 않겠는냐?',
-    book: '論語',
-    category: '學而',
-    section: '學而時習之'
-}));
