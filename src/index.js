@@ -5,8 +5,31 @@ import path from 'path';
 import Website from './website';
 
 export default class Orientalism {
+    static all(root, output) {
+        fs.readdirSync(root).forEach(o => {
+            const book = o;
+            fs.readdirSync(root + '/' + book).forEach(o => {
+                if(path.extname(o) === '.json') {
+                    const category = o.substr(0, o.length - 5);
+                    const sources = JSON.parse(fs.readFileSync(root + '/' + book + '/' + o));
+                    sources.forEach(o => {
+                        const section = o.content.split(/\s+/)[0];
+                        const source = Object.assign(o, {book, category, section});
+                        const destination = `${output}/${book}/${category}/${section}`;
+                        Orientalism.gen(source, destination + '.html');
+
+                        fs.mkdirSync(path.dirname(path.resolve(destination + '.json')), {recursive: true});
+                        fs.writeFileSync(destination + '.json', JSON.stringify(source));
+
+                        console.log('run docker');
+                    });
+                }
+            });
+        });
+    }
+
     static gen(source, output) {
-        const html = Orientalism.html(JSON.parse(fs.readFileSync(source)));
+        const html = Orientalism.html(source);
 
         fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
         fs.writeFileSync(output, html);
@@ -45,7 +68,7 @@ export default class Orientalism {
                         <div class="row">
                             <div class="col-2 pr-0">
                                 <h6 class="text-chinese text-right">
-                                    {{book}} / {{category}} / {{section}}
+                                    {{book}} / {{category}}
                                 </h6>
                             </div>
                             <div class="col-10">
@@ -86,10 +109,3 @@ export default class Orientalism {
     </body>`, data);
     }
 }
-
-const source = './example.json';
-const destination = './docs/論語/學而/學而時習之.html';
-
-console.log("TODO: REMOVE THIS");
-console.log(Orientalism.gen(source, destination));
-

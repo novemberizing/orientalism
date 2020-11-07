@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+require = require('esm')(module /*, options*/);
+const Orientalism = require('../src/index').default;
+
+const argv = process.argv.slice(2);
+
+if(argv.length >= 2) {
+    Orientalism.all(argv[0], argv[1]);
+} else {
+    console.log('orientalism [source] [destination]');
+}

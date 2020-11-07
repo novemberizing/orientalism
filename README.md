@@ -5,3 +5,4 @@ __[NOVEMBERIZING] ORIENTALISM__
 
 [GITHUB PAGE] [REACT] 
 
+https://ctext.org/analects/xue-er/
