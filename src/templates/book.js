@@ -1,13 +1,14 @@
 import Mustache from 'mustache';
 
 export default class TemplateBook {
-    static body(meta) {
+    static body(meta, categories) {
         const data = {
             book: meta.book,
             category: meta.category,
             section: meta.section,
             prefix: meta.prefix,
-            content: meta.content
+            content: meta.content,
+            links: categories.map(o => `<a href="/orientalism/${meta.book}/${o}" class="badge badge-light"><p class="font-weight-bold h6 m0 p0">${o}</p></a>`).join('\n')
         };
 
         return Mustache.render(`<body>
@@ -47,13 +48,13 @@ export default class TemplateBook {
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
-                                    <i class="fab fa-google fa-lg fa-fw"></i>
+                                    <i class="fab fa-heart fa-lg fa-fw"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="col-4 mt-5 pr-5">
-                        category
+                        {{{links}}}
                     </div>
                 </div>
             </div>

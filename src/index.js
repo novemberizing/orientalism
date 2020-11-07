@@ -4,22 +4,25 @@ import path from 'path';
 
 import Website from './website';
 import TemplateIndex from './templates';
+import TemplateBook from './templates/book';
 
 export default class Orientalism {
     static all(root, output) {
         let files = [];
+        let books = [];
+        let categories = new Map();
         fs.readdirSync(root).forEach(o => {
             const book = o;
+            books.push(book);
+            let objects = [];
+            categories.set(book, objects);
             fs.readdirSync(root + '/' + book).forEach(o => {
                 if(path.extname(o) === '.json') {
                     const category = o.substr(0, o.length - 5);
+                    objects.push(category);
                     const sources = JSON.parse(fs.readFileSync(root + '/' + book + '/' + o));
                     const stat = fs.statSync(root + '/' + book + '/' + o);
                     files.push({book, category, sources, date: stat.mtime});
-
-
-                    // console.log(stat.mtime);
-
                 }
             });
         });
@@ -35,7 +38,7 @@ export default class Orientalism {
                 const section = o.content.split(/\s+/)[0];
                 const source = Object.assign(o, {book, category, section});
                 const destination = `${output}/index`;
-                Orientalism.index(source, destination + '.html');
+                Orientalism.index(source, destination + '.html', books);
             }
         }
         files.sort((x, y) => x.date >= y.date)
@@ -43,6 +46,13 @@ export default class Orientalism {
                 const book = o.book;
                 const category = o.category;
                 const sources = o.sources;
+                if(sources.length > 0) {
+                    const o = sources[sources.length - 1];
+                    const section = o.content.split(/\s+/)[0];
+                    const source = Object.assign(o, {book, category, section});
+                    const destination = `${output}/${book}/index`;
+                    Orientalism.book(source, destination + '.html', categories.get(book));
+                }
                 sources.forEach(o => {
                     const section = o.content.split(/\s+/)[0];
                     const source = Object.assign(o, {book, category, section});
@@ -64,8 +74,8 @@ export default class Orientalism {
         return html;
     }
 
-    static index(source, output) {
-        const html = Orientalism.html(source, TemplateIndex);
+    static index(source, output, params) {
+        const html = Orientalism.html(source, TemplateIndex, params);
 
         fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
         fs.writeFileSync(output, html);
@@ -73,7 +83,16 @@ export default class Orientalism {
         return html;
     }
 
-    static html(o, func) {
+    static book(source, output, params) {
+        const html = Orientalism.html(source, TemplateBook, params);
+
+        fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
+        fs.writeFileSync(output, html);
+
+        return html;
+    }
+
+    static html(o, func, params) {
         const input = Object.assign(JSON.parse(fs.readFileSync("./.conf/global.json")), o);
         const twitter = JSON.parse(fs.readFileSync("./.conf/twitter.json"));
         const opengraph = JSON.parse(fs.readFileSync("./.conf/opengraph.json"));
@@ -84,7 +103,7 @@ export default class Orientalism {
             Website.publicPath = input.publicPath;
         }
         
-        return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, func);
+        return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, func, params);
     }
 
     static body(meta) {
@@ -133,7 +152,7 @@ export default class Orientalism {
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
-                                    <i class="fab fa-google fa-lg fa-fw"></i>
+                                    <i class="fab fa-heart fa-lg fa-fw"></i>
                                 </a>
                             </div>
                         </div>

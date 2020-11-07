@@ -1,14 +1,20 @@
 import Mustache from 'mustache';
 
 export default class TemplateIndex {
-    static body(meta) {
+    static body(meta, books) {
+
         const data = {
             book: meta.book,
             category: meta.category,
             section: meta.section,
             prefix: meta.prefix,
-            content: meta.content
+            content: meta.content,
+            links: books.map(o => `<a href="/orientalism/${o}" class="badge badge-light"><p class="font-weight-bold h6 m0 p0">${o}</p></a>`).join('\n')
         };
+
+        
+
+
 
         return Mustache.render(`<body>
         <div id="root">
@@ -47,13 +53,13 @@ export default class TemplateIndex {
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
-                                    <i class="fab fa-google fa-lg fa-fw"></i>
+                                    <i class="fab fa-heart fa-lg fa-fw"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="col-4 mt-5 pr-5">
-                        book
+                        {{{links}}}
                     </div>
                 </div>
             </div>

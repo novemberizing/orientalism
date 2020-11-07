@@ -47,7 +47,7 @@ export default class TemplateCategory {
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
-                                    <i class="fab fa-google fa-lg fa-fw"></i>
+                                    <i class="fab fa-heart fa-lg fa-fw"></i>
                                 </a>
                             </div>
                         </div>
