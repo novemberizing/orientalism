@@ -12,4 +12,4 @@ docker run -it --rm -v ${PWD}/docs:/source novemberizing/orientalism-java ./grad
 
 https://ctext.org/analects/xue-er/
 
-- [ ] INDEX PAGE
+- [ ] INDEX PAGE 를 어떻게 구현해야할까?
