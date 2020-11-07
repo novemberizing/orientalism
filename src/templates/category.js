@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import qs from 'querystring';
 import Mustache from 'mustache';
 
 import Website from '../website';
@@ -26,7 +27,7 @@ export default class TemplateCategory {
             Website.publicPath = input.publicPath;
         }
 
-        const body = TemplateCategory.body(o);
+        const body = TemplateCategory.body(Object.assign(o, input, twitter, opengraph, scripts, styles));
         
         return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, body);
     }
@@ -43,6 +44,8 @@ export default class TemplateCategory {
             section: meta.source.section,
             prefix: meta.source.prefix,
             content: meta.source.content,
+            url: qs.stringify({url: meta.publicPath + '/' + meta.source.book + '/' + meta.source.category + '/' + meta.source.section + '.html'}),
+            hashtags: qs.stringify({hashtags: meta.source.section}),
             sections: meta.categories.map(o => TemplateCategory.tag(meta.source.book, meta.source.category, meta.source.section, o.category))
         };
 
@@ -76,7 +79,7 @@ export default class TemplateCategory {
                         <hr class="row mb-2 mr-1" />
                         <div class="row text-right">
                             <div class="col-12 text-right">
-                                <a href="#" class="text-secondary">
+                                <a href="https://twitter.com/intent/tweet?{{{url}}}&{{{hashtags}}}" class="text-secondary">
                                     <i class="fab fa-twitter fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">

@@ -18,7 +18,8 @@ docker run -it --rm -v ${PWD}/docs:/source novemberizing/orientalism-java ./grad
 
 https://ctext.org/analects/xue-er/
 
-- [ ] INDEX PAGE 를 어떻게 구현해야할까?
+- [x] INDEX PAGE 를 어떻게 구현해야할까?
+- [ ] BUTTON 의 활용방안
 
 개발 서버 실행
 
