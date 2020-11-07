@@ -29,7 +29,7 @@ export default class Website {
             locale: o.locale,
             title: `${o.book}/${o.category}/${o.section}`,
             twitter: {
-                type: Twitter.SummaryLargeImageCard,
+                type: Twitter.SummaryCard,
                 username: twitter.username,
                 url: `${Website.publicPath}/${o.book}/${o.category}/${o.section}.png`,
                 alt: `${o.book}/${o.category}/${o.section}`
