@@ -5,4 +5,11 @@ __[NOVEMBERIZING] ORIENTALISM__
 
 [GITHUB PAGE] [REACT] 
 
+
+npm install -g
+orientalism [source] [destination]
+docker run -it --rm -v ${PWD}/docs:/source novemberizing/orientalism-java ./gradlew run --args='"/source" "/source"'
+
 https://ctext.org/analects/xue-er/
+
+- [ ] INDEX PAGE
