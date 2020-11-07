@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import qs from 'querystring';
+import urlencode from 'urlencode';
 import Mustache from 'mustache';
 
 import Website from '../website';
@@ -44,7 +45,7 @@ export default class TemplateBook {
             section: meta.source.section,
             prefix: meta.source.prefix,
             content: meta.source.content,
-            url: qs.stringify({url: meta.publicPath + '/' + meta.source.book + '/' + meta.source.category + '/' + meta.source.section + '.html'}),
+            url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
             sections: meta.books.map(o => TemplateBook.tag(meta.source.book, meta.source.category, meta.source.section, o.book))
         };
