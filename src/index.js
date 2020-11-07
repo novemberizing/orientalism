@@ -3,33 +3,60 @@ import fs from 'fs';
 import path from 'path';
 
 import Website from './website';
+import TemplateIndex from './templates';
 
 export default class Orientalism {
     static all(root, output) {
+        let files = [];
         fs.readdirSync(root).forEach(o => {
             const book = o;
             fs.readdirSync(root + '/' + book).forEach(o => {
                 if(path.extname(o) === '.json') {
                     const category = o.substr(0, o.length - 5);
                     const sources = JSON.parse(fs.readFileSync(root + '/' + book + '/' + o));
-                    sources.forEach(o => {
-                        const section = o.content.split(/\s+/)[0];
-                        const source = Object.assign(o, {book, category, section});
-                        const destination = `${output}/${book}/${category}/${section}`;
-                        Orientalism.gen(source, destination + '.html');
+                    const stat = fs.statSync(root + '/' + book + '/' + o);
+                    files.push({book, category, sources, date: stat.mtime});
 
-                        fs.mkdirSync(path.dirname(path.resolve(destination + '.json')), {recursive: true});
-                        fs.writeFileSync(destination + '.json', JSON.stringify(source));
 
-                        console.log('run docker');
-                    });
+                    // console.log(stat.mtime);
+
                 }
             });
         });
+        if(files.length > 0) {
+            const first = files[0];
+            const book = first.book;
+            const category = first.category;
+            const sources = first.sources;
+
+            if(sources.length > 0) {
+                const o = sources[sources.length - 1];
+
+                const section = o.content.split(/\s+/)[0];
+                const source = Object.assign(o, {book, category, section});
+                const destination = `${output}/index`;
+                Orientalism.index(source, destination + '.html');
+            }
+        }
+        files.sort((x, y) => x.date >= y.date)
+             .forEach(o => {
+                const book = o.book;
+                const category = o.category;
+                const sources = o.sources;
+                sources.forEach(o => {
+                    const section = o.content.split(/\s+/)[0];
+                    const source = Object.assign(o, {book, category, section});
+                    const destination = `${output}/${book}/${category}/${section}`;
+                    Orientalism.gen(source, destination + '.html');
+
+                    fs.mkdirSync(path.dirname(path.resolve(destination + '.json')), {recursive: true});
+                    fs.writeFileSync(destination + '.json', JSON.stringify(source));
+                });
+             });
     }
 
     static gen(source, output) {
-        const html = Orientalism.html(source);
+        const html = Orientalism.html(source, Orientalism);
 
         fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
         fs.writeFileSync(output, html);
@@ -37,7 +64,16 @@ export default class Orientalism {
         return html;
     }
 
-    static html(o) {
+    static index(source, output) {
+        const html = Orientalism.html(source, TemplateIndex);
+
+        fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
+        fs.writeFileSync(output, html);
+
+        return html;
+    }
+
+    static html(o, func) {
         const input = Object.assign(JSON.parse(fs.readFileSync("./.conf/global.json")), o);
         const twitter = JSON.parse(fs.readFileSync("./.conf/twitter.json"));
         const opengraph = JSON.parse(fs.readFileSync("./.conf/opengraph.json"));
@@ -48,7 +84,7 @@ export default class Orientalism {
             Website.publicPath = input.publicPath;
         }
         
-        return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, Orientalism);
+        return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, func);
     }
 
     static body(meta) {
