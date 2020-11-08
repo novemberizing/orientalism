@@ -48,7 +48,7 @@ export default class TemplateCategory {
             url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
             search: qs.stringify({q: meta.source.content}),
-            sections: meta.categories.map(o => TemplateCategory.tag(meta.source.book, meta.source.category, meta.source.section, o.category))
+            sections: meta.categories.map(o => TemplateCategory.tag(meta.source.book, meta.source.category, meta.source.section, o.category)).join(' ')
         };
 
         return Mustache.render(`<body>

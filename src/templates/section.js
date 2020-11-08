@@ -53,7 +53,7 @@ export default class TemplateSection {
             url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
             search: qs.stringify({q: meta.source.content}),
-            sections: meta.sections.map(o => TemplateSection.tag(meta.source.book, meta.source.category, meta.source.section, o.section))
+            sections: meta.sections.map(o => TemplateSection.tag(meta.source.book, meta.source.category, meta.source.section, o.section)).join(' ')
         };
 
         return Mustache.render(`<body>
