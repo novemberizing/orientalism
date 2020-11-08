@@ -4,13 +4,18 @@ import Mustache from 'mustache';
 
 import Website from '../website';
 
-export default class TemplateBook {
-    static gen(o ,output) {
-        const html = TemplateBook.html(o);
+export default class TemplateSection {
+    static gen(o , output) {
+        const html = TemplateSection.html(o);
 
         fs.mkdirSync(path.dirname(path.resolve(output)), {recursive: true});
         fs.writeFileSync(output + '.html', html);
-        fs.writeFileSync(output + '.json', JSON.stringify(o.books));
+
+        if(path.basename(output) !== 'index') {
+            fs.writeFileSync(output + '.json', JSON.stringify(o.source));
+        } else {
+            fs.writeFileSync(output + '.json', JSON.stringify(o.sections));
+        }
 
         return html;
     }
@@ -26,14 +31,14 @@ export default class TemplateBook {
             Website.publicPath = input.publicPath;
         }
 
-        const body = TemplateBook.body(o);
+        const body = TemplateSection.body(o);
         
         return Website.gen(Website.meta(input, twitter, opengraph), styles, scripts, body);
     }
 
     static tag(book, category, section, o) {
-        const badge = book === o ? "btn btn-outline-success" : "btn btn-outline-secondary";
-        return `<a href="/orientalism/${o}/" class="${badge} p0"><p class="font-weight-bold m0 p0 d-inline">${o}</p></a>`;
+        const badge = section === o ? "btn btn-outline-success" : "btn btn-outline-secondary";
+        return `<a href="/orientalism/${book}/${category}/${o}.html" class="${badge} p0"><p class="font-weight-bold m0 p0 d-inline">${o}</p></a>`;
     }
 
     static body(meta) {
@@ -43,7 +48,7 @@ export default class TemplateBook {
             section: meta.source.section,
             prefix: meta.source.prefix,
             content: meta.source.content,
-            sections: meta.books.map(o => TemplateBook.tag(meta.source.book, meta.source.category, meta.source.section, o.book))
+            sections: meta.sections.map(o => TemplateSection.tag(meta.source.book, meta.source.category, meta.source.section, o.section))
         };
 
         return Mustache.render(`<body>

@@ -65,7 +65,7 @@ export default class Website {
         }).join('\n').trim();
     }
 
-    static gen(meta, styles, scripts, generator, params) {
+    static gen(meta, styles, scripts, body) {
         const twitter = Twitter.from(meta);
         const opengraph = Opengraph.from(meta);
 
@@ -81,7 +81,7 @@ export default class Website {
         ${opengraph.html()}
         ${Website.styles(styles)}
     </head>
-    ${generator.body(meta, params)}
+    ${body}
 </html>
 `;
         return html;
