@@ -52,7 +52,7 @@ export default class TemplateSection {
             content: meta.source.content,
             url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
-            search: qs.stringify({q: urlencode(meta.source.content)}),
+            search: qs.stringify({q: meta.source.content}),
             sections: meta.sections.map(o => TemplateSection.tag(meta.source.book, meta.source.category, meta.source.section, o.section))
         };
 
