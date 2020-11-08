@@ -83,10 +83,10 @@ export default class TemplateBook {
                         <hr class="row mb-2 mr-1" />
                         <div class="row text-right">
                             <div class="col-12 text-right">
-                                <a href="https://twitter.com/intent/tweet?{{{url}}}&{{{hashtags}}}" class="text-secondary">
+                                <a href="https://twitter.com/intent/tweet?{{{url}}}&{{{hashtags}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-twitter fa-lg fa-fw"></i>
                                 </a>
-                                <a href="https://www.google.com/search?{{{search}}}" class="text-secondary">
+                                <a href="https://www.google.com/search?{{{search}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
