@@ -11,7 +11,11 @@ orientalism [source] [destination]
 docker run -it --rm -v ${PWD}/docs:/source novemberizing/orientalism-java ./gradlew run --args='"/source" "/source"'
 ```
 
+## EXAMPLE
 
+```
+docker run -it --rm -v C:\Users\novemberizing\Desktop\Workspace\novemberizing\orientalism\docs:/source novemberizing/orientalism-java ./gradlew run --args='"/source" "/source"'
+```
 
 
 개발 서버 확인 방법
@@ -34,6 +38,7 @@ HEART: ??????
 - [ ] FAVICON
 - [ ] CATEGORY BUTTON IN CONTENT VIEW
 - [ ] BOOK BUTTON IN CATEGORY VIEW
+- [x] GOOGLE ANALYTICS
 
 개발 서버 실행
 

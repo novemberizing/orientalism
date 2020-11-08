@@ -29,7 +29,7 @@ export default class Website {
             locale: o.locale,
             title: `${o.book}/${o.category}/${o.section}`,
             twitter: {
-                type: Twitter.SummaryCard,
+                type: Twitter.SummaryLargeImageCard,
                 username: twitter.username,
                 url: `${Website.publicPath}/${o.book}/${o.category}/${o.section}.png`,
                 alt: `${o.book}/${o.category}/${o.section}`
@@ -97,6 +97,13 @@ export default class Website {
         ${twitter.html()}
         ${opengraph.html()}
         ${Website.styles(styles)}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W2KXXRVN7"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4W2KXXRVN7');
+        </script>
     </head>
     ${body}
 </html>

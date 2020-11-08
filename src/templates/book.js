@@ -51,8 +51,6 @@ export default class TemplateBook {
             sections: meta.books.map(o => TemplateBook.tag(meta.source.book, meta.source.category, meta.source.section, o.book))
         };
 
-        console.log(data);
-
         return Mustache.render(`<body>
         <div id="root">
             <div class="all">
