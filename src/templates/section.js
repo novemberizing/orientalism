@@ -40,7 +40,7 @@ export default class TemplateSection {
 
     static tag(book, category, section, o) {
         const badge = section === o ? "btn btn-outline-success" : "btn btn-outline-secondary";
-        return `<a href="/orientalism/${book}/${category}/${o}.html" class="${badge} p0"><p class="font-weight-bold m0 p0 d-inline">${o}</p></a>`;
+        return `<a href="/orientalism/${book}/${category}/${o}.html" class="${badge} p0 mt-1"><p class="font-weight-bold m0 p0 d-inline">${o}</p></a>`;
     }
 
     static body(meta) {
