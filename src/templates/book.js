@@ -80,7 +80,7 @@ export default class TemplateBook {
                         </div>
                         <hr class="row mb-2 mr-1" />
                         <div class="row text-right">
-                            <div class="col-12 text-right">
+                            <div class="col-12 text-right pr-1">
                                 <a href="https://twitter.com/intent/tweet?{{{url}}}&{{{hashtags}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-twitter fa-lg fa-fw"></i>
                                 </a>
