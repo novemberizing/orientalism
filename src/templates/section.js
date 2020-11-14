@@ -50,6 +50,7 @@ export default class TemplateSection {
             section: meta.source.section,
             prefix: meta.source.prefix,
             content: meta.source.content,
+            description: meta.source.description,
             url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
             search: qs.stringify({q: meta.source.content}),
@@ -67,7 +68,7 @@ export default class TemplateSection {
                                     {{book}} / {{category}}
                                 </h6>
                             </div>
-                            <div class="col-10">
+                            <div class="col-lg-10">
                             </div>
                         </div>
                         <hr class="row mt-0 mr-1" />
@@ -78,14 +79,24 @@ export default class TemplateSection {
                                 </h4>
                             </div>
                             <div class="col-lg-10 col-md-12">
-                                <h1 class="text-chinese text-chinese-content">
-                                    {{content}}
-                                </h1>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <h1 class="text-chinese text-chinese-content">
+                                            {{content}}
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 text-chinese text-chinese-description p-5">
+                                        {{description}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr class="row mb-2 mr-1" />
                         <div class="row text-right">
                             <div class="col-md-12 col-lg-12 text-right pr-4">
+                                <a href="#" class="text-secondary"><i class="far fa-question-circle fa-lg fa-fw"></i></a>
                                 <a href="https://twitter.com/intent/tweet?{{{url}}}&{{{hashtags}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-twitter fa-lg fa-fw"></i>
                                 </a>
