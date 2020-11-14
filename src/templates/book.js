@@ -99,7 +99,7 @@ export default class TemplateBook {
                                 <a href="https://www.google.com/search?{{{search}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-google fa-lg fa-fw"></i>
                                 </a>
-                                <a href="https://translate.google.co.kr/?{{{translate}}}" class="text-secondary">
+                                <a href="https://translate.google.co.kr/?{{{translate}}}" target="_blank" class="text-secondary">
                                     <i class="fas fa-language fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
