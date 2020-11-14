@@ -57,8 +57,8 @@ export default class TemplateCategory {
                 <div class="row h-100 w-100 m-0 p-0 my-auto d-flex">
                     <div class="col-lg-8 col-md-12 px-0">
                         <div class="row">
-                            <div class="col-2 pr-0">
-                                <h6 class="text-chinese text-right">
+                            <div class="col-lg-2 col-md-12 pr-0">
+                                <h6 class="text-chinese text-chinese">
                                     {{book}} / {{category}}
                                 </h6>
                             </div>
@@ -68,7 +68,7 @@ export default class TemplateCategory {
                         <hr class="row mt-0 mr-1" />
                         <div class="row">
                             <div class="col-2 pr-0">
-                                <h4 class="text-chinese text-right">
+                                <h4 class="text-chinese-book text-right">
                                     {{prefix}}
                                 </h4>
                             </div>
@@ -99,7 +99,7 @@ export default class TemplateCategory {
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 mt-5 pr-5">
+                    <div class="col-lg-4 col-md-12 p-2 book-panel">
                         {{{sections}}}
                     </div>
                 </div>

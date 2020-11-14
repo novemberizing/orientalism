@@ -45,5 +45,5 @@ HEART: ??????
 쿼리문자열을 다시 쿼리 문자열로 바꾸어야 하는구나.
 
 ```
-docker run -it --rm -v ${PWD}/docs:/usr/local/apache2/htdocs -p 80:80 --name orientalism httpd
+docker run -it --rm -v ${PWD}/docs:/usr/local/apache2/htdocs/orientalism -p 80:80 --name orientalism httpd
 ```

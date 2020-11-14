@@ -42,12 +42,21 @@ body {
 
 .all {
     display: flex;
-    min-height: 100vh;
-    min-width: 375px;
+    padding-top: 1.25rem!important;
 }
 
 .text-chinese {
     font-family: cursive;
+}
+
+.text-chinese-book {
+    text-align: left!important;
+    padding-left: 1rem!important;   
+}
+
+.book-panel {
+    margin-top: 3rem!important;
+    text-align: right!important;
 }
 
 /*
@@ -59,7 +68,17 @@ body {
 */
 
 @media (min-width: 576px) {
-
+    .text-chinese-book {
+        text-align: right!important;
+    }
+    .all {
+        display: flex;
+        min-height: 100vh;
+        min-width: 375px;
+    }
+    .book-panel {
+        margin-top: 1rem!important;
+    }
 }
 
 @media (min-width: 992px) {
