@@ -49,6 +49,7 @@ export default class TemplateCategory {
             url: qs.stringify({url: meta.publicPath + '/' + urlencode(meta.source.book) + '/' + urlencode(meta.source.category) + '/' + urlencode(meta.source.section) + '.html'}),
             hashtags: qs.stringify({hashtags: meta.source.section}),
             search: qs.stringify({q: meta.source.content}),
+            translate: qs.stringify({sl: "zh-CN", tl: "ko", text: meta.source.content, op: "translate"}),
             sections: meta.categories.map(o => TemplateCategory.tag(meta.source.book, meta.source.category, meta.source.section, o.category)).join(' ')
         };
 
@@ -97,6 +98,9 @@ export default class TemplateCategory {
                                 </a>
                                 <a href="https://www.google.com/search?{{{search}}}" target="_blank" class="text-secondary">
                                     <i class="fab fa-google fa-lg fa-fw"></i>
+                                </a>
+                                <a href="https://translate.google.co.kr/?{{{translate}}}" class="text-secondary">
+                                    <i class="fas fa-language fa-lg fa-fw"></i>
                                 </a>
                                 <a href="#" class="text-secondary">
                                     <i class="fas fa-heart fa-lg fa-fw"></i>
