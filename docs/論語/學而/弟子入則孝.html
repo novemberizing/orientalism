@@ -47,6 +47,38 @@
             gtag('js', new Date());
             gtag('config', 'G-4W2KXXRVN7');
         </script>
+        <script>
+            var playid = null;
+            function orientalismPlay() {
+                if(document.getElementById('orientalism-play-btn')) {
+                    document.getElementById('orientalism-play-btn').removeEventListener('click', orientalismPlay);
+                    document.getElementById('orientalism-play-btn').className = 'text-success';
+                }
+                playid = window.setTimeout(function(){
+                    location.href="/orientalism/論語/學而/賢賢易色.html?play=on";
+                }, 3000);
+                if(document.getElementById('orientalism-play-btn')) {
+                    document.getElementById('orientalism-play-btn').addEventListener('click', orientalismStop);
+                }
+            }
+            function orientalismStop() {
+                document.getElementById('orientalism-play-btn').removeEventListener('click', orientalismStop);
+                if(playid) {
+                    window.clearTimeout(playid);
+                    playid = null;
+                    document.getElementById('orientalism-play-btn').className = 'text-secondary';
+                    document.getElementById('orientalism-play-btn').addEventListener('click', orientalismPlay);
+                }
+            }
+            const params = new URLSearchParams(window.location.search);
+            const status = {
+                play: params.get('play') || 'off'
+            };
+            console.log(status);
+            if(status.play === 'on') {
+                orientalismPlay();
+            }
+        </script>
     </head>
     <body>
         <div id="root">
@@ -105,9 +137,18 @@
                                 <a href="#" class="text-secondary">
                                     <i class="fas fa-random fa-lg fa-fw"></i>
                                 </a>
-                                <a href="#" class="text-secondary">
+                                <a id="orientalism-play-btn" href="javascript:void(0);" class="text-secondary">
                                     <i class="fas fa-play fa-lg fa-fw"></i>
                                 </a>
+                                <script>
+                                    if(status.play === 'on') {
+                                        document.getElementById('orientalism-play-btn').className = 'text-success';
+                                        document.getElementById('orientalism-play-btn').addEventListener('click', orientalismStop);
+                                    } else {
+                                        document.getElementById('orientalism-play-btn').className = 'text-secondary';
+                                        document.getElementById('orientalism-play-btn').addEventListener('click', orientalismPlay);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>

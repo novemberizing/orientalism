@@ -23,7 +23,7 @@ export default class TemplateSection {
     }
 
     static html(o) {
-        const input = Object.assign(JSON.parse(fs.readFileSync("./.conf/global.json")), o.source);
+        const input = Object.assign(JSON.parse(fs.readFileSync("./.conf/global.json")), o.source, {sections: o.sections});
         const twitter = JSON.parse(fs.readFileSync("./.conf/twitter.json"));
         const opengraph = JSON.parse(fs.readFileSync("./.conf/opengraph.json"));
         const scripts = JSON.parse(fs.readFileSync("./.conf/scripts.json"));
@@ -113,9 +113,18 @@ export default class TemplateSection {
                                 <a href="#" class="text-secondary">
                                     <i class="fas fa-random fa-lg fa-fw"></i>
                                 </a>
-                                <a href="#" class="text-secondary">
+                                <a id="orientalism-play-btn" href="javascript:void(0);" class="text-secondary">
                                     <i class="fas fa-play fa-lg fa-fw"></i>
                                 </a>
+                                <script>
+                                    if(status.play === 'on') {
+                                        document.getElementById('orientalism-play-btn').className = 'text-success';
+                                        document.getElementById('orientalism-play-btn').addEventListener('click', orientalismStop);
+                                    } else {
+                                        document.getElementById('orientalism-play-btn').className = 'text-secondary';
+                                        document.getElementById('orientalism-play-btn').addEventListener('click', orientalismPlay);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>

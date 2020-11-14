@@ -38,8 +38,8 @@ export default class Orientalism {
                 });
                 OrientalismSection.gen({source: sections[0], sections}, `${output}/${book}/${category}/index`);
             });
-            OrientalismCategory.gen({source: categories[0].sections[0], categories}, `${output}/${book}/index`);
+            OrientalismCategory.gen({source: categories[0].sections[0], categories, sections: categories[0].sections}, `${output}/${book}/index`);
         });
-        OrientalismBook.gen({source: books[0].categories[0].sections[0], books}, `${output}/index`);
+        OrientalismBook.gen({source: books[0].categories[0].sections[0], books, sections: books[0].categories[0].sections}, `${output}/index`);
     }
 }

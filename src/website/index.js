@@ -43,7 +43,8 @@ export default class Website {
             category: o.category,
             section: o.section,
             prefix: o.prefix,
-            content: o.content
+            content: o.content,
+            sections: o.sections
         };
     }
 
@@ -68,6 +69,21 @@ export default class Website {
     static gen(meta, styles, scripts, body) {
         const twitter = Twitter.from(meta);
         const opengraph = Opengraph.from(meta);
+
+        let i = 0;
+        for(; i < meta.sections.length; i++) {
+            if(meta.sections[i].section === meta.section) {
+                break;
+            }
+        }
+
+        i = (i + 1 === meta.sections.length ? 0 : i +1);
+
+        const next = {
+            book: meta.book,
+            category: meta.category,
+            section: meta.sections[i].section
+        }
 
         const html = `<!DOCTYPE html>
 <html lang="${meta.lang}">
@@ -104,6 +120,38 @@ export default class Website {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-4W2KXXRVN7');
+        </script>
+        <script>
+            var playid = null;
+            function orientalismPlay() {
+                if(document.getElementById('orientalism-play-btn')) {
+                    document.getElementById('orientalism-play-btn').removeEventListener('click', orientalismPlay);
+                    document.getElementById('orientalism-play-btn').className = 'text-success';
+                }
+                playid = window.setTimeout(function(){
+                    location.href="/orientalism/${next.book}/${next.category}/${next.section}.html?play=on";
+                }, 3000);
+                if(document.getElementById('orientalism-play-btn')) {
+                    document.getElementById('orientalism-play-btn').addEventListener('click', orientalismStop);
+                }
+            }
+            function orientalismStop() {
+                document.getElementById('orientalism-play-btn').removeEventListener('click', orientalismStop);
+                if(playid) {
+                    window.clearTimeout(playid);
+                    playid = null;
+                    document.getElementById('orientalism-play-btn').className = 'text-secondary';
+                    document.getElementById('orientalism-play-btn').addEventListener('click', orientalismPlay);
+                }
+            }
+            const params = new URLSearchParams(window.location.search);
+            const status = {
+                play: params.get('play') || 'off'
+            };
+            console.log(status);
+            if(status.play === 'on') {
+                orientalismPlay();
+            }
         </script>
     </head>
     ${body}
