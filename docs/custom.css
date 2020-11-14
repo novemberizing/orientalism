@@ -79,46 +79,23 @@ body {
 --breakpoint-xl: 1200px;
 */
 
-/* @media (min-width: 576px) {
-    .text-chinese-book {
-        text-align: right!important;
-    }
-    .all {
-        display: flex;
-        min-height: 100vh;
-    }
-    .book-panel {
-        margin-top: 1rem!important;
-        text-align: left!important;
-    }
-    .text-chinese-prefix {
-        text-align: right!important;
-    }
-    .text-chinese-content {
-        padding: .25rem!important;
-    }
-} */
-
-@media (min-width: 768px) {
-    .text-chinese-book {
-        text-align: right!important;
-    }
-    .all {
-        display: flex;
-        min-height: 100vh;
-    }
-    .book-panel {
-        margin-top: 1rem!important;
-        text-align: left!important;
-    }
-    .text-chinese-prefix {
-        text-align: right!important;
-    }
-    .text-chinese-content {
-        padding: .25rem!important;
-    }
-}
-
 @media (min-width: 992px) {
-
+    .text-chinese-book {
+        text-align: right!important;
+    }
+    .all {
+        display: flex;
+        min-height: 100vh;
+    }
+    .book-panel {
+        margin-top: 1rem!important;
+        text-align: left!important;
+    }
+    .text-chinese-prefix {
+        text-align: right!important;
+    }
+    .text-chinese-content {
+        padding: .25rem!important;
+    }
 }
+
