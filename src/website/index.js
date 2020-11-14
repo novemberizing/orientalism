@@ -130,7 +130,7 @@ export default class Website {
                 }
                 playid = window.setTimeout(function(){
                     location.href="/orientalism/${next.book}/${next.category}/${next.section}.html?play=on";
-                }, 3000);
+                }, 15000);
                 if(document.getElementById('orientalism-play-btn')) {
                     document.getElementById('orientalism-play-btn').addEventListener('click', orientalismStop);
                 }
