@@ -59,6 +59,18 @@ body {
     text-align: right!important;
 }
 
+.text-chinese-prefix {
+    text-align: left!important;
+    padding: 1rem!important;
+}
+
+.text-chinese-content {
+    padding-left: 1rem!important;
+    padding-right: .25rem!important;
+    padding-top: .25rem!important;
+    padding-bottom: .25rem!important;
+}
+
 /*
 --breakpoint-xs: 0;
 --breakpoint-sm: 576px;
@@ -79,6 +91,13 @@ body {
     .book-panel {
         margin-top: 1rem!important;
     }
+    .text-chinese-prefix {
+        text-align: right!important;
+    }
+    .text-chinese-content {
+        padding: .25rem!important;
+    }
+    
 }
 
 @media (min-width: 992px) {
