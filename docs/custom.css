@@ -86,7 +86,6 @@ body {
     .all {
         display: flex;
         min-height: 100vh;
-        min-width: 375px;
     }
     .book-panel {
         margin-top: 1rem!important;
