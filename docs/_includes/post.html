@@ -1,26 +1,19 @@
-<section class="resume-section">
-    <div class="resume-section-content">
-        <p class="mb-2">
-            <small>
-                {{ page.section }}
-            </small>
-        </p>
-        <h3 class="mb-1 text-center" style="font-size: 8em; font-weight: normal;">
-            <a href="{{ post.url }}" class="text-black text-decoration-none" style="font-family: 'Noto Serif HK', serif;">
-                {{ page.title }}
-            </a>
-        </h3>
-        <p class="mb-5 text-center small">
-            {{ page.subtitle }}
-        </p>
-        <div class="mx-2 mb-5">
-            {% for tag in page.tags %}
-                <span class="badge badge-outline-secondary">{{ tag }}</span>
-            {% endfor %}
-        </div>
-        <div class="mb-5 px-2">
-            {{ content }}
-        </div>
+<section>
+    <h3 class="mb-3 text-center" style="font-size: 8em; font-weight: normal;">
+        <a href="{{ post.url }}" class="text-black text-decoration-none" style="font-family: 'Noto Serif HK', serif;">
+            {{ page.title }}
+        </a>
+    </h3>
+    <p class="mb-5 text-center small">
+        {{ page.subtitle }}
+    </p>
+    <div class="mx-2 mb-5">
+        {% for tag in page.tags %}
+            <span class="badge badge-outline-secondary">{{ tag }}</span>
+        {% endfor %}
+    </div>
+    <div class="mb-5 px-2">
+        {{ content }}
     </div>
 </section>
 
