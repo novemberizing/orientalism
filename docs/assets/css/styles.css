@@ -11425,8 +11425,8 @@ section.resume-section .resume-section-content {
 }
 @media (min-width: 992px) {
   section.resume-section {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
