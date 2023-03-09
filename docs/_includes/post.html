@@ -1,19 +1,21 @@
 <section class="resume-section">
-    <p class="mb-3 text-center">
-        <a href="{{ post.url | prepend: site.baseurl }}" class="text-black text-decoration-none orientalism-title" style="font-family: 'Noto Serif HK', serif;">
-            {{ page.title }}
-        </a>
-    </p>
-    <p class="mb-5 text-center small">
-        {{ page.subtitle }}
-    </p>
-    <div class="mx-2 mb-5 text-center">
-        {% for tag in page.tags %}
-            <span class="badge badge-outline-secondary">{{ tag }}</span>
-        {% endfor %}
-    </div>
-    <div class="mb-5 px-2">
-        {{ content }}
+    <div>
+        <p class="mb-3 text-center">
+            <a href="{{ post.url | prepend: site.baseurl }}" class="text-black text-decoration-none orientalism-title" style="font-family: 'Noto Serif HK', serif;">
+                {{ page.title }}
+            </a>
+        </p>
+        <p class="mb-5 text-center small">
+            {{ page.subtitle }}
+        </p>
+        <div class="mx-2 mb-5 text-center">
+            {% for tag in page.tags %}
+                <span class="badge badge-outline-secondary">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-5 px-2">
+            {{ content }}
+        </div>
     </div>
 </section>
 
