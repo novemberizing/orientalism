@@ -11494,3 +11494,13 @@ section.resume-section .resume-section-content {
   border-color: #343a40;
   border: 1px solid;
 }
+
+.orientalism-title {
+  font-size: '8em';
+}
+
+@media (min-width: 768px) {
+  .orientalism-title {
+    font-size: '5em';
+  }
+}
