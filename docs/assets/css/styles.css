@@ -11497,10 +11497,12 @@ section.resume-section .resume-section-content {
 
 .orientalism-title {
   font-size: '8em';
+  font-weight: normal;
 }
 
 @media (min-width: 768px) {
   .orientalism-title {
     font-size: '5em';
+    font-weight: normal;
   }
 }
