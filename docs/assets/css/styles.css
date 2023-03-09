@@ -203,7 +203,9 @@ dd {
 }
 
 blockquote {
-  margin: 0 0 1rem;
+  margin: 1rem;
+  font-style: italic;
+  font-size: small;
 }
 
 b,
@@ -11496,13 +11498,13 @@ section.resume-section .resume-section-content {
 }
 
 .orientalism-title {
-  font-size: 8em;
+  font-size: 5em;
   font-weight: normal;
 }
 
 @media (min-width: 768px) {
   .orientalism-title {
-    font-size: 5em;
+    font-size: 8em;
     font-weight: normal;
   }
 }
