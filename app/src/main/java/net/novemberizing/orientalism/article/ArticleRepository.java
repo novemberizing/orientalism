@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import net.novemberizing.core.objects.Listener;
 import net.novemberizing.orientalism.OrientalismApplicationDB;
 import net.novemberizing.orientalism.OrientalismApplicationVolley;
 
@@ -42,14 +43,24 @@ public class ArticleRepository {
         }
     }
 
-    /**
-     * sync 는 done notify 를 ...
-     *
-     */
-    public static void sync() {
+    private static void syncByIndexJson(JsonElement json, Listener<List<Article>> listener) {
+        JsonArray array = json.getAsJsonArray();
+        for(JsonElement element : array) {
+            Log.e(Tag, element.toString());
+        }
+
+        synchronized (ArticleRepository.class) {
+            requestSync = null;
+        }
+    }
+
+    public static void sync(Listener<List<Article>> listener) {
         synchronized (ArticleRepository.class) {
             if(requestSync == null) {
-                requestSync = OrientalismApplicationVolley.json(indexJsonUrl, JsonElement.class, ArticleRepository::onSyncSuccess, ArticleRepository::onSyncFail);
+                requestSync = OrientalismApplicationVolley.json(indexJsonUrl,
+                                                                JsonElement.class,
+                                                                json -> syncByIndexJson(json, listener),
+                                                                ArticleRepository::onSyncFail);
             }
         }
     }

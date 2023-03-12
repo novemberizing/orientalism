@@ -63,11 +63,11 @@ public class OrientalismApplicationVolley {
     public OrientalismApplicationVolley(Context context) {
         this.context = context;
         this.queue = Volley.newRequestQueue(context);
-        this.queue.addRequestEventListener(new RequestQueue.RequestEventListener() {
-            @Override
-            public void onRequestEvent(Request<?> request, int event) {
-                Log.e(Tag, request.getUrl());
-            }
-        });
+//        this.queue.addRequestEventListener(new RequestQueue.RequestEventListener() {
+//            @Override
+//            public void onRequestEvent(Request<?> request, int event) {
+//                Log.e(Tag, request.getUrl());
+//            }
+//        });
     }
 }

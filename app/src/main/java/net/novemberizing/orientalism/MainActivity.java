@@ -28,6 +28,7 @@ import com.android.volley.Request;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.novemberizing.core.ListUtil;
 import net.novemberizing.orientalism.article.Article;
 import net.novemberizing.orientalism.article.ArticleRepository;
 import net.novemberizing.orientalism.article.ArticleViewModel;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         secondaryTitle = findViewById(R.id.main_activity_secondary_title);
         story = findViewById(R.id.main_activity_story);
 
-        ArticleRepository.sync();
+        ArticleRepository.sync(ListUtil::e);
 
         // Request<JsonElement> req = OrientalismApplicationVolley.json("https://novemberizing.github.io/orientalism/index.json", JsonElement.class, res->{ Log.e(Tag, res.toString()); }, error->{ error.printStackTrace();});
 
