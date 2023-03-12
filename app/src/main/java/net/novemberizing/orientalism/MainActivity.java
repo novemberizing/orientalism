@@ -24,12 +24,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.Request;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.novemberizing.orientalism.article.Article;
+import net.novemberizing.orientalism.article.ArticleRepository;
 import net.novemberizing.orientalism.article.ArticleViewModel;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String Tag = "MainActivity";
     private TextView title;
     private TextView secondaryTitle;
     private TextView story;
@@ -44,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.main_activity_title);
         secondaryTitle = findViewById(R.id.main_activity_secondary_title);
         story = findViewById(R.id.main_activity_story);
+
+        ArticleRepository.sync();
+
+        // Request<JsonElement> req = OrientalismApplicationVolley.json("https://novemberizing.github.io/orientalism/index.json", JsonElement.class, res->{ Log.e(Tag, res.toString()); }, error->{ error.printStackTrace();});
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
 
