@@ -3,54 +3,91 @@ package net.novemberizing.orientalism.article;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.ColumnInfo;
 
-import com.android.volley.Request;
-import com.android.volley.VolleyError;
+import com.android.volley.Response;
+import com.android.volley.toolbox.RequestFuture;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 
-import net.novemberizing.core.objects.Listener;
 import net.novemberizing.orientalism.OrientalismApplicationDB;
+import net.novemberizing.orientalism.OrientalismApplicationGson;
 import net.novemberizing.orientalism.OrientalismApplicationVolley;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.LinkedHashMap;
 import java.util.List;
+
 
 public class ArticleRepository {
     private static final String Tag = "ArticleRepository";
     private static final String indexJsonUrl = "https://novemberizing.github.io/orientalism/index.json";
-    private static Request<JsonElement> requestSync = null;
 
-    public static void onSyncFail(VolleyError error) {
-        if(error != null) {
-            Log.e(Tag, error.toString());
-        }
+    private static RequestFuture<JsonArray> requestFutureSync = null;
 
+    public static void sync() {
         synchronized (ArticleRepository.class) {
-            requestSync = null;
-        }
-    }
+            if(requestFutureSync == null) {
+                requestFutureSync = RequestFuture.newFuture();
+                requestFutureSync.setRequest(OrientalismApplicationVolley.json(indexJsonUrl,
+                        JsonArray.class,
+                        array-> {
+                            LinkedHashMap<String, RequestFuture<JsonArray>> requestMap = new LinkedHashMap<>();
+                            for(JsonElement element : array) {
+                                String url = element.getAsString();
+                                RequestFuture<JsonArray> req = RequestFuture.newFuture();
+                                requestMap.put(url, req);
+                                req.setRequest(OrientalismApplicationVolley.json(url,
+                                        JsonArray.class,
+                                        articles->{
+                                            Log.e(Tag, articles.toString());
+                                            Gson gson = OrientalismApplicationGson.get();
+                                            for(JsonElement item : articles) {
+                                                Article article = gson.fromJson(item, Article.class);
+                                                Log.e(Tag, article.url);
+                                                Log.e(Tag, article.title);
+                                                Log.e(Tag, article.summary);
+                                                Log.e(Tag, article.story);
+                                                Log.e(Tag, article.datetime);
+                                                try {
+                                                    Document document = Jsoup.connect(article.url).get();
+                                                } catch (IOException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                                article.story = null;
 
-    private static void syncByIndexJson(JsonElement json, Listener<List<Article>> listener) {
-        JsonArray array = json.getAsJsonArray();
-        for(JsonElement element : array) {
-            Log.e(Tag, element.toString());
-        }
 
-        synchronized (ArticleRepository.class) {
-            requestSync = null;
-        }
-    }
 
-    public static void sync(Listener<List<Article>> listener) {
-        synchronized (ArticleRepository.class) {
-            if(requestSync == null) {
-                requestSync = OrientalismApplicationVolley.json(indexJsonUrl,
-                                                                JsonElement.class,
-                                                                json -> syncByIndexJson(json, listener),
-                                                                ArticleRepository::onSyncFail);
+                                                // article.story = Jsoup
+                                            }
+                                            synchronized (ArticleRepository.class) {
+                                                if(requestMap.size() == 0) {
+                                                    requestFutureSync = null;
+                                                }
+                                            }
+                                        },
+                                        exception->{
+                                            Log.e(Tag, exception.toString());
+                                            synchronized (ArticleRepository.class) {
+                                                if(requestMap.size() == 0) {
+                                                    requestFutureSync = null;
+                                                }
+                                            }
+                                        }));
+                            }
+                        },
+                        exception->{
+                            Log.e(Tag, exception.toString());
+                            synchronized (ArticleRepository.class) {
+                                requestFutureSync = null;
+                            }
+                        }));
             }
         }
     }

@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         secondaryTitle = findViewById(R.id.main_activity_secondary_title);
         story = findViewById(R.id.main_activity_story);
 
-        ArticleRepository.sync(ListUtil::e);
-
         // Request<JsonElement> req = OrientalismApplicationVolley.json("https://novemberizing.github.io/orientalism/index.json", JsonElement.class, res->{ Log.e(Tag, res.toString()); }, error->{ error.printStackTrace();});
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);

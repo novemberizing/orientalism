@@ -13,8 +13,12 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.List;
 
 public class OrientalismApplicationVolley {
 
@@ -34,9 +38,7 @@ public class OrientalismApplicationVolley {
             }
         }
     }
-//    public GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
-//                       Listener<T> listener, ErrorListener errorListener) {
-//        super(Method.GET, url, errorListener);
+
     public static <T> Request<T> json(String url, Class<T> c,Response.Listener<T> success, Response.ErrorListener fail) {
         return instance.queue.add(new Request<T>(Request.Method.GET, url, fail) {
             @Override

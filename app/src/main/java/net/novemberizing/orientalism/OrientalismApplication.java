@@ -11,6 +11,7 @@ import androidx.work.WorkManager;
 import com.android.volley.toolbox.Volley;
 
 import net.novemberizing.orientalism.article.ArticleDailyWorker;
+import net.novemberizing.orientalism.article.ArticleRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +26,8 @@ public class OrientalismApplication extends Application {
         OrientalismApplicationGson.gen();
         OrientalismApplicationDB.gen(this);
         OrientalismApplicationVolley.gen(this);
+
+        ArticleRepository.sync();
 
         // Volley.newRequestQueue(this);
 
