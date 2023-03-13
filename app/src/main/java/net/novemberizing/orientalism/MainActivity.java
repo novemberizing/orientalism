@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         secondaryTitle = findViewById(R.id.main_activity_secondary_title);
         story = findViewById(R.id.main_activity_story);
 
+        ArticleRepository.recentSync();
+
         // Request<JsonElement> req = OrientalismApplicationVolley.json("https://novemberizing.github.io/orientalism/index.json", JsonElement.class, res->{ Log.e(Tag, res.toString()); }, error->{ error.printStackTrace();});
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
@@ -76,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
         article.observe(this, new Observer<Article>() {
             @Override
             public void onChanged(Article article) {
-                Log.e("Main", Integer.toString(article.uid));
-                Log.e("Main", article.title);
-                Log.e("Main", article.url);
-                Log.e("Main", article.summary);
-                Log.e("Main", article.story);
-                Log.e("Main", article.datetime);
+                if(article != null) {
+                    Log.e("Main", Integer.toString(article.uid));
+                    Log.e("Main", article.title);
+                    Log.e("Main", article.url);
+                    Log.e("Main", article.summary);
+                    Log.e("Main", article.story);
+                    Log.e("Main", article.datetime);
+                }
+
             }
         });
 

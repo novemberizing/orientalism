@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -39,7 +40,11 @@ public class OrientalismApplicationVolley {
         }
     }
 
-    public static <T> Request<T> json(String url, Class<T> c,Response.Listener<T> success, Response.ErrorListener fail) {
+    public static Request<String> str(String url, Response.Listener<String> success, Response.ErrorListener fail) {
+        return instance.queue.add(new StringRequest(url, success, fail));
+    }
+
+    public static <T> Request<T> json(String url, Class<T> c, Response.Listener<T> success, Response.ErrorListener fail) {
         return instance.queue.add(new Request<T>(Request.Method.GET, url, fail) {
             @Override
             protected Response<T> parseNetworkResponse(NetworkResponse response) {
@@ -65,11 +70,5 @@ public class OrientalismApplicationVolley {
     public OrientalismApplicationVolley(Context context) {
         this.context = context;
         this.queue = Volley.newRequestQueue(context);
-//        this.queue.addRequestEventListener(new RequestQueue.RequestEventListener() {
-//            @Override
-//            public void onRequestEvent(Request<?> request, int event) {
-//                Log.e(Tag, request.getUrl());
-//            }
-//        });
     }
 }

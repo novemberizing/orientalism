@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import net.novemberizing.orientalism.article.Article;
 import net.novemberizing.orientalism.article.ArticleDao;
@@ -24,12 +26,6 @@ public abstract class OrientalismApplicationDB extends RoomDatabase {
         synchronized (OrientalismApplicationDB.class) {
             if(instance == null) {
                 instance = Room.databaseBuilder(context.getApplicationContext(), OrientalismApplicationDB.class, "orientalism.db")
-                        .setQueryCallback(new QueryCallback() {
-                            @Override
-                            public void onQuery(@NonNull String s, @NonNull List<?> list) {
-                                Log.e("Room", s);
-                            }
-                        }, pool)
                         .build();
             }
         }

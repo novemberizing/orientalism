@@ -30,6 +30,6 @@ public class ArticleViewModel extends AndroidViewModel {
     }
 
     public void insert(Article article) {
-        repository.insert(article);
+        repository.insert(article, null);
     }
 }

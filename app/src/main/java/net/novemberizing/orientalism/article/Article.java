@@ -2,12 +2,13 @@ package net.novemberizing.orientalism.article;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import net.novemberizing.core.DateUtil;
 import net.novemberizing.orientalism.ExampleContent;
 
-@Entity(tableName = "article")
+@Entity(tableName = "article", indices = {@Index(value="url", unique = true)})
 public class Article {
     public static Article gen(String url) {
         Article o = new Article();
