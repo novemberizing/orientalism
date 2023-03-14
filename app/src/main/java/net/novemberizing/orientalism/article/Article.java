@@ -25,5 +25,5 @@ public class Article {
     @ColumnInfo(name = "story")
     public String story;
     @ColumnInfo(name = "datetime")
-    public Date datetime;
+    public String datetime;
 }
