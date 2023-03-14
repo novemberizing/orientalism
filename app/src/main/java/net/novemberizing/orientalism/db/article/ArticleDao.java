@@ -16,6 +16,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY datetime DESC LIMIT 1")
     LiveData<Article> recent();
 
+    @Query("SELECT COUNT(*) FROM article WHERE :category")
+    Integer categoryCount(Integer category);
+
     @Insert
     void insert(Article article);
 

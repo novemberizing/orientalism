@@ -100,12 +100,11 @@ public class ArticleRepository {
                             synchronized (ArticleRepository.class) {
                                 for(JsonElement element : array) {
                                     String url = element.getAsString();
-                                    // TODO: 조회 나의 데이터가 동기화가 완료되었을까?
-                                    Integer category = Article.toCategory(url);
-                                    Log.e(Tag, "===================>" + category);
-                                    // f.get
-
-                                    // 202303.json
+//                                    // TODO: 조회 나의 데이터가 동기화가 완료되었을까?
+//                                    Integer category = Article.toCategory(url);
+//                                    Log.e(Tag, "===================>" + category);
+//                                    Integer count = repository.categoryCount(category);
+//                                    Log.e(Tag, "===================>" + count);
 
                                     RequestFuture<JsonArray> req = RequestFuture.newFuture();
                                     requestMap.put(url, req);
@@ -305,5 +304,9 @@ public class ArticleRepository {
 
     public LiveData<List<Article>> articles(){
         return articles;
+    }
+
+    public Integer categoryCount(Integer category){
+        return articleDao.categoryCount(category);
     }
 }
