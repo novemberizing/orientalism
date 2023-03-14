@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.article;
+package net.novemberizing.orientalism.db.article;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @Dao
 public interface ArticleDao {
-    @Query("SELECT * FROM article ORDER BY uid DESC")
+    @Query("SELECT * FROM article ORDER BY datetime DESC")
     LiveData<List<Article>> all();
 
-    @Query("SELECT * FROM article ORDER BY uid DESC LIMIT 1")
+    @Query("SELECT * FROM article ORDER BY datetime DESC LIMIT 1")
     LiveData<Article> recent();
 
     @Insert

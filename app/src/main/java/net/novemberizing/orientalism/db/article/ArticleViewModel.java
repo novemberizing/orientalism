@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.article;
+package net.novemberizing.orientalism.db.article;
 
 import android.app.Application;
 

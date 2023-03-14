@@ -12,4 +12,12 @@ public class StringUtil {
         }
         return false;
     }
+
+    public static String merge(String[] strings, int n) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < n && i < strings.length; i++) {
+            builder.append(strings[i]);
+        }
+        return builder.toString();
+    }
 }

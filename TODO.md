@@ -1,28 +1,28 @@
-1. ANDROID: ROOM ARTICLE DATABASE DATETIME TO LONG
-
-   안드로이드 앱에서 Article 객체 datetime 의 타입을 String 에서 Date 로 변경한다.
-
-2. ANDROID: ArticleRepository.sync 의 이름을 변경한다. ArticleRepository.forceSync
-
 3. ANDROID: ArticleRepository.sync 를 구현한다.
 
    이 함수는 아직 받지 않은 것을 받도록 한다.
    어떻게 하면 빈 것을 알 수 있을지 고민해야 한다.
 
-4. ANDROID: 하루에 한 번 호출되도록 한다.
+   어떻게 하면 빈 것을 알 수 있을까?
+   어떻게 하면 내가 받은 데이터 중에 빈 것이 있는지 알까?
+   어떻게 하면 내가 받은 데이터 중에 빈 것이 있는지 알까? Index Json 만 가지고,.... // 
+   로컬 데이터만 가지고 펀치홀을 알아내야 한다.
+
+5. ANDROID: 하루에 한 번 호출되도록 한다.
 
    안드로이드 기본 상태가 WAKEUP 이면 체크를 수행한다.
    앱을 실행 시키면 동작한다.
 
-5. ANDROID: 공유하기를 구현한다.
-6. ANDROID 릴리즈를 위한 구현꺼리를 만든다.
-7. ANDROID PROGUARD 적용,
-8. Article.main 정적 함수를 만든다.
+6. ANDROID: 공유하기를 구현한다.
+7. ANDROID 릴리즈를 위한 구현꺼리를 만든다.
+8. ANDROID PROGUARD 적용,
+9. Article.main 정적 함수를 만든다.
 
 
 
 9. 설정에서 알림바 ON/OFF 구현하기
 
+10. CLEAN 소스 (첫번째 릴리즈 전에 소스를 한번 정리한다.)
 ----
 
 고사성어를 통해서 배우려고 한다.

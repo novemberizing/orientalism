@@ -13,7 +13,7 @@ public class OrientalismApplicationDBTypeConverter {
     }
 
     @TypeConverter
-    public static Long dateToTimestamp(Date date) {
+    public static Long toTimestamp(Date date) {
         return date == null ? null : date.getTime();
     }
 }

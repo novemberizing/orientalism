@@ -1,6 +1,5 @@
 package net.novemberizing.orientalism;
 
-import static android.text.Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 import android.Manifest;
@@ -10,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
@@ -25,12 +23,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import net.novemberizing.orientalism.article.Article;
-import net.novemberizing.orientalism.article.ArticleRepository;
-import net.novemberizing.orientalism.article.ArticleViewModel;
+import net.novemberizing.orientalism.db.article.Article;
+import net.novemberizing.orientalism.db.article.ArticleRepository;
+import net.novemberizing.orientalism.db.article.ArticleViewModel;
 
 import java.util.List;
 

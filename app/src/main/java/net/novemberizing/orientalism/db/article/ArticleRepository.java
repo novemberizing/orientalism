@@ -1,20 +1,17 @@
-package net.novemberizing.orientalism.article;
+package net.novemberizing.orientalism.db.article;
 
 import android.database.sqlite.SQLiteConstraintException;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.ColumnInfo;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.RequestFuture;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 
+import net.novemberizing.core.FileUtil;
 import net.novemberizing.core.GsonUtil;
 import net.novemberizing.core.JsoupUtil;
 import net.novemberizing.core.objects.Listener;
@@ -22,13 +19,7 @@ import net.novemberizing.orientalism.OrientalismApplicationDB;
 import net.novemberizing.orientalism.OrientalismApplicationGson;
 import net.novemberizing.orientalism.OrientalismApplicationVolley;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -97,6 +88,102 @@ public class ArticleRepository {
     }
 
     public static void sync(Listener<List<Article>> listener) {
+        synchronized (ArticleRepository.class) {
+            if(requestFutureSync == null) {
+                ArrayList<Article> result = new ArrayList<>();
+                ArticleRepository repository = new ArticleRepository();
+                requestFutureSync = RequestFuture.newFuture();
+                requestFutureSync.setRequest(OrientalismApplicationVolley.json(indexJsonUrl,
+                        JsonArray.class,
+                        array -> {
+                            LinkedHashMap<String, RequestFuture<JsonArray>> requestMap = new LinkedHashMap<>();
+                            synchronized (ArticleRepository.class) {
+                                for(JsonElement element : array) {
+                                    String url = element.getAsString();
+                                    // TODO: 조회 나의 데이터가 동기화가 완료되었을까?
+                                    Integer category = Article.toCategory(url);
+                                    Log.e(Tag, "===================>" + category);
+                                    // f.get
+
+                                    // 202303.json
+
+                                    RequestFuture<JsonArray> req = RequestFuture.newFuture();
+                                    requestMap.put(url, req);
+                                    req.setRequest(OrientalismApplicationVolley.json(url,
+                                            JsonArray.class,
+                                            articles->{
+                                                Gson gson = OrientalismApplicationGson.get();
+                                                LinkedHashMap<String, RequestFuture<String>> articleMap = new LinkedHashMap<>();
+                                                synchronized (ArticleRepository.class) {
+                                                    for(JsonElement item : articles) {
+                                                        Article article = gson.fromJson(item, Article.class);
+                                                        RequestFuture<String> articleFuture = RequestFuture.newFuture();
+                                                        articleMap.put(article.url, articleFuture);
+                                                        articleFuture.setRequest(OrientalismApplicationVolley.str(article.url,
+                                                                html -> {
+                                                                    article.story = JsoupUtil.str(html, "orientalism-content");
+                                                                    result.add(article);
+                                                                    repository.insert(article, o-> {
+                                                                        synchronized (ArticleRepository.class) {
+                                                                            articleMap.remove(article.url);
+                                                                            if(articleMap.size() == 0) {
+                                                                                requestMap.remove(url);
+                                                                                if(requestMap.size() == 0) {
+                                                                                    requestFutureSync = null;
+                                                                                    if(listener != null) {
+                                                                                        listener.on(result);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                },
+                                                                exception -> {
+                                                                    synchronized (ArticleRepository.class) {
+                                                                        articleMap.remove(article.url);
+                                                                        if(articleMap.size() == 0) {
+                                                                            requestMap.remove(url);
+                                                                            if(requestMap.size() == 0) {
+                                                                                requestFutureSync = null;
+                                                                                if(listener != null) {
+                                                                                    listener.on(result);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }));
+                                                    }
+                                                }
+                                            },
+                                            exception->{
+                                                Log.e(Tag, exception.toString());
+                                                synchronized (ArticleRepository.class) {
+                                                    requestMap.remove(url);
+                                                    if(requestMap.size() == 0) {
+                                                        requestFutureSync = null;
+                                                        if(listener != null) {
+                                                            listener.on(result);
+                                                        }
+                                                    }
+                                                }
+                                            }));
+                                }
+                            }
+                        },
+                        exception->{
+                            Log.e(Tag, exception.toString());
+                            synchronized (ArticleRepository.class) {
+                                requestFutureSync = null;
+                                if(listener != null) {
+                                    listener.on(result);
+                                }
+                            }
+                        }));
+            }
+        }
+    }
+
+    public static void refreshSync(Listener<List<Article>> listener) {
         synchronized (ArticleRepository.class) {
             if(requestFutureSync == null) {
                 ArrayList<Article> result = new ArrayList<>();

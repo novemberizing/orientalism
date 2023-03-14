@@ -3,16 +3,12 @@ package net.novemberizing.orientalism;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import com.android.volley.toolbox.Volley;
-
-import net.novemberizing.orientalism.article.Article;
-import net.novemberizing.orientalism.article.ArticleDailyWorker;
-import net.novemberizing.orientalism.article.ArticleRepository;
+import net.novemberizing.orientalism.db.article.ArticleDailyWorker;
+import net.novemberizing.orientalism.db.article.ArticleRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +22,7 @@ public class OrientalismApplication extends Application {
         OrientalismApplicationDB.gen(this);
         OrientalismApplicationVolley.gen(this);
 
+        // ArticleRepository.refreshSync(articles -> Log.d(Tag, "ArticleRepository.refreshSync(...)"));
         ArticleRepository.sync(articles -> Log.d(Tag, "ArticleRepository.sync(...)"));
 
         // 기본 작업 등록

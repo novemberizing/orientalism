@@ -4,41 +4,47 @@
         "title": "臥薪嘗膽",
         "pronunciation": "와신상담",
         "summary": "섶 위에서 잠을 자고 쓸개를 핥는다. 곧 목적을 달성하기 위해 온갖 괴로움을 참고 견디는 것을 비유하는 말이다.",
-        "datetime":"2023-03-14 13:07:00"
+        "datetime":"2023-03-14 13:07:00",
+        "category": 202303
     },
     {
         "url": "https://novemberizing.github.io/orientalism/posts/2023/03/13/%E9%81%BC%E6%9D%B1%E4%B9%8B%E8%B1%95.html",
         "title": "遼東之豕",
         "pronunciation": "요동지시",
         "summary": "요동의 돼지. 곧 견문이 좁고 오만한 자가 하찮은 공을 자랑하는 모습을 비꼬아 일컫는 말로서, 줄여서 요시(遼豕), 요동시(遼東豕) 라고 한다.",
-        "datetime":"2023-03-13 10:13:00"
+        "datetime":"2023-03-13 10:13:00",
+        "category": 202303
     },
     {
         "url": "https://novemberizing.github.io/orientalism/posts/2023/03/12/%E5%AE%8C%E7%92%A7.html",
         "title": "完璧",
         "pronunciation": "완벽",
         "summary": "홈이 없는 구슬. 곧 결점 없이 홀륭한 것을 가리킨다. 또 어떤 사물을 손상시킴이 없이 일을 이루어낼 때 쓰이는 말이다. 빌려 온 물건을 온전히 돌려 보내는 것을 이를 때도 쓴다.",
-        "datetime": "2023-03-12 11:26:00"
+        "datetime": "2023-03-12 11:26:00",
+        "category": 202303
     },
     {
         "url": "https://novemberizing.github.io/orientalism/posts/2023/03/11/%E6%9C%9D%E4%B8%89%E6%9A%AE%E5%9B%9B.html",
         "title": "朝三暮四",
         "pronunciation": "조삼모사",
         "summary": "아침에 세 개, 저녁에 네 개. 곧 간사한 잔꾀로 남을 속이는 것을 이르는 말이다. 또는 눈 앞에 보이는 차별만을 알고 그 결과는 같은 것임을 모르는 어리석음을 비유하기도 한다.",
-        "datetime": "2023-03-11 11:19:00"
+        "datetime": "2023-03-11 11:19:00",
+        "category": 202303
     },
     {
         "url": "https://novemberizing.github.io/orientalism/posts/2023/03/10/%E5%B7%A6%E8%A2%92.html",
         "title": "左袒",
         "pronunciation": "좌단",
         "summary": "웃옷의 왼쪽 어깨를 벗는다. 남에게 편을 드는 것, 곧 동의하는 일을 의미한다.",
-        "datetime": "2023-03-10 13:57:00"
+        "datetime": "2023-03-10 13:57:00",
+        "category": 202303
     },
     {
         "url": "https://novemberizing.github.io/orientalism/posts/2023/03/09/%E6%87%B2%E7%BE%B9%E5%90%B9%E9%9F%B2.html",
         "title": "懲羹吹韲",
         "pronunciation": "징갱취제",
         "summary": "뜨거운 국에 덴 나머지 냉채를 불고 먹는다. 곧 한 번 실패한 것 때문에 모든 일에 지나치게 조심하는 것을 비유하는 말이다.",
-        "datetime": "2023-03-09 11:00:00"
+        "datetime": "2023-03-09 11:00:00",
+        "category": 202303
     }
 ]
