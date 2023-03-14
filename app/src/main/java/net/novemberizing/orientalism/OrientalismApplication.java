@@ -10,6 +10,7 @@ import androidx.work.WorkManager;
 
 import com.android.volley.toolbox.Volley;
 
+import net.novemberizing.orientalism.article.Article;
 import net.novemberizing.orientalism.article.ArticleDailyWorker;
 import net.novemberizing.orientalism.article.ArticleRepository;
 
@@ -21,15 +22,11 @@ public class OrientalismApplication extends Application {
     public void onCreate(){
         super.onCreate();
 
-        Log.e(OrientalismApplication.Tag, "onCreate()");
-
         OrientalismApplicationGson.gen();
         OrientalismApplicationDB.gen(this);
         OrientalismApplicationVolley.gen(this);
 
-        ArticleRepository.sync();
-
-        // Volley.newRequestQueue(this);
+        ArticleRepository.sync(articles -> Log.d(Tag, "ArticleRepository.sync(...)"));
 
         // 기본 작업 등록
         WorkManager manager = WorkManager.getInstance(this);

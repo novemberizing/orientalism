@@ -1,5 +1,6 @@
 package net.novemberizing.orientalism.article;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -28,6 +29,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class ArticleRepository {
     private static RequestFuture<JsonArray> requestFutureSync = null;
     private static RequestFuture<JsonArray> requestFutureRecentSync = null;
 
-    public static void recentSync() {
+    public static void recentSync(Listener<Article> listener) {
         synchronized (ArticleRepository.class) {
             ArticleRepository repository = new ArticleRepository();
             requestFutureRecentSync = RequestFuture.newFuture();
@@ -60,16 +62,19 @@ public class ArticleRepository {
                                                 repository.insert(article, o-> {
                                                     synchronized (ArticleRepository.class) {
                                                         requestFutureRecentSync = null;
+                                                        listener.on(article);
                                                     }
                                                 });
                                                 synchronized (ArticleRepository.class) {
                                                     requestFutureRecentSync = null;
+                                                    listener.on(null);
                                                 }
                                             },
                                             exception->{
                                                 Log.e(Tag, exception.toString());
                                                 synchronized (ArticleRepository.class) {
                                                     requestFutureRecentSync = null;
+                                                    listener.on(null);
                                                 }
                                             });
                                 },
@@ -77,6 +82,7 @@ public class ArticleRepository {
                                     Log.e(Tag, exception.toString());
                                     synchronized (ArticleRepository.class) {
                                         requestFutureRecentSync = null;
+                                        listener.on(null);
                                     }
                                 }));
                     },
@@ -84,67 +90,95 @@ public class ArticleRepository {
                         Log.e(Tag, exception.toString());
                         synchronized (ArticleRepository.class) {
                             requestFutureRecentSync = null;
+                            listener.on(null);
                         }
                     }));
         }
     }
 
-    public static void sync() {
+    public static void sync(Listener<List<Article>> listener) {
         synchronized (ArticleRepository.class) {
             if(requestFutureSync == null) {
+                ArrayList<Article> result = new ArrayList<>();
                 ArticleRepository repository = new ArticleRepository();
                 requestFutureSync = RequestFuture.newFuture();
                 requestFutureSync.setRequest(OrientalismApplicationVolley.json(indexJsonUrl,
                         JsonArray.class,
                         array-> {
                             LinkedHashMap<String, RequestFuture<JsonArray>> requestMap = new LinkedHashMap<>();
-                            for(JsonElement element : array) {
-                                String url = element.getAsString();
-                                RequestFuture<JsonArray> req = RequestFuture.newFuture();
-                                requestMap.put(url, req);
-                                req.setRequest(OrientalismApplicationVolley.json(url,
-                                        JsonArray.class,
-                                        articles->{
-                                            Gson gson = OrientalismApplicationGson.get();
-                                            for(JsonElement item : articles) {
-                                                Article article = gson.fromJson(item, Article.class);
-                                                OrientalismApplicationVolley.str(article.url,
-                                                        html -> {
-                                                            article.story = JsoupUtil.str(html, "orientalism-content");
-                                                            repository.insert(article, o-> {
-                                                                synchronized (ArticleRepository.class) {
-                                                                    requestMap.remove(url);
-                                                                    if(requestMap.size() == 0) {
-                                                                        requestFutureSync = null;
+                            synchronized (ArticleRepository.class) {
+                                for(JsonElement element : array) {
+                                    String url = element.getAsString();
+                                    RequestFuture<JsonArray> req = RequestFuture.newFuture();
+                                    requestMap.put(url, req);
+                                    req.setRequest(OrientalismApplicationVolley.json(url,
+                                            JsonArray.class,
+                                            articles->{
+                                                Gson gson = OrientalismApplicationGson.get();
+                                                LinkedHashMap<String, RequestFuture<String>> articleMap = new LinkedHashMap<>();
+                                                synchronized (ArticleRepository.class) {
+                                                    for(JsonElement item : articles) {
+                                                        Article article = gson.fromJson(item, Article.class);
+                                                        RequestFuture<String> articleFuture = RequestFuture.newFuture();
+                                                        articleMap.put(article.url, articleFuture);
+                                                        articleFuture.setRequest(OrientalismApplicationVolley.str(article.url,
+                                                                html -> {
+                                                                    article.story = JsoupUtil.str(html, "orientalism-content");
+                                                                    result.add(article);
+                                                                    repository.insert(article, o-> {
+                                                                        synchronized (ArticleRepository.class) {
+                                                                            articleMap.remove(article.url);
+                                                                            if(articleMap.size() == 0) {
+                                                                                requestMap.remove(url);
+                                                                                if(requestMap.size() == 0) {
+                                                                                    requestFutureSync = null;
+                                                                                    if(listener != null) {
+                                                                                        listener.on(result);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                },
+                                                                exception -> {
+                                                                    synchronized (ArticleRepository.class) {
+                                                                        articleMap.remove(article.url);
+                                                                        if(articleMap.size() == 0) {
+                                                                            requestMap.remove(url);
+                                                                            if(requestMap.size() == 0) {
+                                                                                requestFutureSync = null;
+                                                                                if(listener != null) {
+                                                                                    listener.on(result);
+                                                                                }
+                                                                            }
+                                                                        }
                                                                     }
-                                                                }
-                                                            });
-                                                        },
-                                                        exception -> {
-                                                            synchronized (ArticleRepository.class) {
-                                                                requestMap.remove(url);
-                                                                if(requestMap.size() == 0) {
-                                                                    requestFutureSync = null;
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        },
-                                        exception->{
-                                            Log.e(Tag, exception.toString());
-                                            synchronized (ArticleRepository.class) {
-                                                requestMap.remove(url);
-                                                if(requestMap.size() == 0) {
-                                                    requestFutureSync = null;
+                                                                }));
+                                                    }
                                                 }
-                                            }
-                                        }));
+                                            },
+                                            exception->{
+                                                Log.e(Tag, exception.toString());
+                                                synchronized (ArticleRepository.class) {
+                                                    requestMap.remove(url);
+                                                    if(requestMap.size() == 0) {
+                                                        requestFutureSync = null;
+                                                        if(listener != null) {
+                                                            listener.on(result);
+                                                        }
+                                                    }
+                                                }
+                                            }));
+                                }
                             }
                         },
                         exception->{
                             Log.e(Tag, exception.toString());
                             synchronized (ArticleRepository.class) {
                                 requestFutureSync = null;
+                                if(listener != null) {
+                                    listener.on(result);
+                                }
                             }
                         }));
             }
@@ -167,13 +201,14 @@ public class ArticleRepository {
         OrientalismApplicationDB.execute(()->{
             try {
                 articleDao.insert(article);
+            } catch(SQLiteConstraintException e) {
+                Log.d(Tag, e.toString());
             } catch(Exception e) {
                 Log.e(Tag, e.toString());
             }
             if(listener != null) {
                 listener.on(article);
             }
-            Log.e("Orientalism", "inserted");
         });
     }
 

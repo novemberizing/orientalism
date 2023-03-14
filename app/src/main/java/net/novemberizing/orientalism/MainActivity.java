@@ -1,5 +1,6 @@
 package net.novemberizing.orientalism;
 
+import static android.text.Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
 import android.Manifest;
@@ -9,10 +10,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +28,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.android.volley.Request;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import net.novemberizing.core.ListUtil;
 import net.novemberizing.orientalism.article.Article;
 import net.novemberizing.orientalism.article.ArticleRepository;
 import net.novemberizing.orientalism.article.ArticleViewModel;
@@ -38,8 +37,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String Tag = "MainActivity";
     private TextView title;
-    private TextView secondaryTitle;
+    private TextView pronunciation;
+    private TextView summary;
     private TextView story;
+    private LinearLayout layout;
 
     private ArticleViewModel model;
 
@@ -49,75 +50,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity_layout);
 
         title = findViewById(R.id.main_activity_title);
-        secondaryTitle = findViewById(R.id.main_activity_secondary_title);
+        pronunciation = findViewById(R.id.main_activity_pronunciation);
         story = findViewById(R.id.main_activity_story);
+        summary = findViewById(R.id.main_activity_summary);
+        layout = findViewById(R.id.main_activity_layout);
 
-        ArticleRepository.recentSync();
+        // layout.setBackgroundResource(R.drawable.bamboo_g0d4e6fe68_1920);
 
-        // Request<JsonElement> req = OrientalismApplicationVolley.json("https://novemberizing.github.io/orientalism/index.json", JsonElement.class, res->{ Log.e(Tag, res.toString()); }, error->{ error.printStackTrace();});
+        ArticleRepository.recentSync(article -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
 
         LiveData<Article> article = model.recent();
         LiveData<List<Article>> articles = model.articles();
 
-        articles.observe(this, new Observer<List<Article>>() {
-            @Override
-            public void onChanged(List<Article> articles) {
-                for(Article value : articles) {
-                    Log.e("Main", Integer.toString(value.uid));
-                    Log.e("Main", value.title);
-                    Log.e("Main", value.url);
-                    Log.e("Main", value.summary);
-                    Log.e("Main", value.story);
-                    Log.e("Main", value.datetime);
-                }
+        article.observe(this, o -> {
+            if(o != null) {
+                setTitle(o.title);
+                setPronunciation(o.pronunciation);
+                setStory(o.story);
+                setSummary(o.summary);
             }
         });
-
-        article.observe(this, new Observer<Article>() {
-            @Override
-            public void onChanged(Article article) {
-                if(article != null) {
-                    Log.e("Main", Integer.toString(article.uid));
-                    Log.e("Main", article.title);
-                    Log.e("Main", article.url);
-                    Log.e("Main", article.summary);
-                    Log.e("Main", article.story);
-                    Log.e("Main", article.datetime);
-                }
-
-            }
-        });
-
-        // model.insert(Article.gen("https://novemberizing.github.io/orientalism/posts/2023/03/09/%E5%B7%A6%E8%A2%92.html"));
-
-//        // article.insert(Article.gen());
-//        // LiveData<List<Article>> list = article.articles();
-//        list.observe(this, new Observer<List<Article>>() {
-//
-//            @Override
-//            public void onChanged(List<Article> articles) {
-//                Log.e("Main", "onChanged");
-//                for(Article value : articles) {
-//                    Log.e("Main", Integer.toString(value.uid));
-//                    Log.e("Main", value.title);
-//                    Log.e("Main", value.url);
-//                    Log.e("Main", value.summary);
-//                    Log.e("Main", value.story);
-//                    Log.e("Main", value.datetime);
-//                }
-//            }
-//        });
-
-        // OrientalismApplicationDB orientalismApplicationDB = OrientalismApplicationDB.get(this);
-
-        // 데이터베이스에 삽입하기
-
-        setTitle("懲羹吹韲");
-        setSecondaryTitle("징갱취제");
-        setStory(ExampleContent.get());
-
+        // TODO: VERSION 1 REFACTORING
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String name = new String("net.novemberizing.orientalism");
             String description = new String("hello world");
@@ -154,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
         }
         notificationManager.notify(1001, builder.build());
     }
-
-    private void setArticle(Article article) {
-
-    }
-
     private void setTitle(String value) {
         SpannableString string = new SpannableString(value);
         Typeface font = ResourcesCompat.getFont(this, R.font.notoserifhk_light);
@@ -172,14 +122,33 @@ public class MainActivity extends AppCompatActivity {
         title.setText(string);
     }
 
-    private void setSecondaryTitle(String value) {
+    private void setPronunciation(String value) {
         SpannableString string = new SpannableString(value);
-        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifhk_light);
-        string.setSpan(new RelativeSizeSpan(2f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        secondaryTitle.setText(string);
+        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        string.setSpan(new RelativeSizeSpan(1.6f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        pronunciation.setText(string);
+    }
+
+    private void setSummary(String value) {
+        SpannableString string = new SpannableString(value);
+        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        string.setSpan(new RelativeSizeSpan(1.0f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        summary.setText(string);
     }
 
     public void setStory(String value) {
-        story.setText(value);
+        SpannableStringBuilder builder = OrientalismApplicationHtml.from(value);
+        builder.setSpan(new RelativeSizeSpan(1.2f), 0, builder.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            builder.setSpan(new TypefaceSpan(font), 0, builder.length(), SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        story.setText(builder);
     }
 }
