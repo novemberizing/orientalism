@@ -1,70 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp">
 
         <LinearLayout
-            android:id="@+id/main_activity_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="?attr/colorOnBackground"
-            android:elevation="8dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/main_activity_title"
+            <LinearLayout
+                android:id="@+id/main_activity_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="懲羹吹韲" />
+                android:orientation="vertical"
+                android:background="?attr/colorOnBackground"
+                android:elevation="3dp">
 
-            <TextView
-                android:id="@+id/main_activity_pronunciation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"
-                android:text="징갱취제" />
+                <TextView
+                    android:id="@+id/main_activity_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="48sp"
+                    android:fontFamily="@font/notoserifhk_light" />
 
-            <TextView
-                android:id="@+id/main_activity_summary"
+                <TextView
+                    android:id="@+id/main_activity_pronunciation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/notoserifkr_regular"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/main_activity_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingEnd="32dp"
+                    android:paddingStart="32dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/notoserifkr_regular" />
+
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:paddingEnd="32dp"
-                android:paddingStart="32dp"
-                android:gravity="center"
-                android:text="뜨거운 국에 덴 나머지 냉채를 불고 먹는다. 곧 한 번 실패한 것 때문에 모든 일에 지나치게 조심하는 것을 비유하는 말이다." />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/main_activity_story"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp" />
+
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/main_activity_story"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:text="뜨거운 국에 덴 나머지 냉채를 불고 먹는다. 곧 한 번 실패한 것 때문에 모든 일에 지나치게 조심하는 것을 비유하는 말이다." />
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/main_activity_bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        app:backgroundTint="?attr/colorOnBackground"
+        app:elevation="3dp"
+        app:addElevationShadow="true"
+        style="@style/Widget.Material3.BottomAppBar"
+        app:menu="@menu/bottom_app_bar_menu">
 
-        </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
-    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_activity_floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/baseline_arrow_right_24"
+        app:layout_anchor="@id/main_activity_bottom_app_bar"
+        app:backgroundTint="?attr/colorPrimaryVariant"
+        app:rippleColor="?attr/colorSecondaryVariant"
+        android:contentDescription="@string/main_activity_floating_button_description" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

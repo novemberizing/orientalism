@@ -2,7 +2,6 @@ package net.novemberizing.orientalism.db.article;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -16,12 +15,12 @@ public interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY datetime DESC LIMIT 1")
     LiveData<Article> recent();
 
-    @Query("SELECT COUNT(*) FROM article WHERE :category")
-    Integer categoryCount(Integer category);
+    @Query("SELECT COUNT(*) FROM article WHERE category=:category")
+    Integer count(Integer category);
 
     @Insert
     void insert(Article article);
 
-    @Delete
-    void delete(Article article);
+//    @Delete
+//    void delete(Article article);
 }

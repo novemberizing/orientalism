@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.concurrent.futures.CallbackToFutureAdapter;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
@@ -28,7 +26,7 @@ public class ArticleDailyWorker extends ListenableWorker {
         private Executor executor = null;
 
         public void set(Result result) {
-            Log.e(Tag, "set(result)");
+            Log.e(Tag, "set(result)");      // TODO: REMOVE THIS
             synchronized (this){
                 this.result = result;
                 if(executor != null && listener != null) {
@@ -39,7 +37,7 @@ public class ArticleDailyWorker extends ListenableWorker {
 
         @Override
         public void addListener(Runnable listener, Executor executor) {
-            Log.e(Tag, "addListener(Runnable listener, Executor executor)");
+            Log.e(Tag, "addListener(Runnable listener, Executor executor)");    // TODO: REMOVE THIS
             synchronized (this) {
                 if(result != null) {
                     executor.execute(listener);;
@@ -52,31 +50,31 @@ public class ArticleDailyWorker extends ListenableWorker {
 
         @Override
         public boolean cancel(boolean b) {
-            Log.e(Tag, "cancel(b) => implement this");
+            Log.e(Tag, "cancel(b) => implement this");          // TODO: REMOVE THIS
             return false;
         }
 
         @Override
         public boolean isCancelled() {
-            Log.e(Tag, "isCancelled() => implement this");
+            Log.e(Tag, "isCancelled() => implement this");      // TODO: REMOVE THIS
             return false;
         }
 
         @Override
         public boolean isDone() {
-            Log.e(Tag, "isDone() => implement this => " + Boolean.toString(result != null));
+            Log.e(Tag, "isDone() => implement this => " + Boolean.toString(result != null));    // TODO: REMOVE THIS
             return result != null;
         }
 
         @Override
         public Result get() throws ExecutionException, InterruptedException {
-            Log.e(Tag, "get() => implement this");
+            Log.e(Tag, "get() => implement this");              // TODO: REMOVE THIS
             return result;
         }
 
         @Override
         public Result get(long l, TimeUnit timeUnit) throws ExecutionException, InterruptedException, TimeoutException {
-            Log.e(Tag, "get(l, timeUnit) => implement this");
+            Log.e(Tag, "get(l, timeUnit) => implement this");   // TODO: REMOVE THIS
             return result;
         }
     }
@@ -92,21 +90,11 @@ public class ArticleDailyWorker extends ListenableWorker {
     @NonNull
     @Override
     public ListenableFuture<Result> startWork() {
-        Log.e(Tag, "startWork()");
+        Log.e(Tag, "startWork()");  // TODO: CHANGE Log.w
         Future future = new Future();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    // throw new RuntimeException(e);
-                }
-                future.set(Result.success());
-                Log.e(Tag, "future is set");
-            }
-        });
-        thread.start();
+
+        ArticleRepository.sync(articles -> future.set(Result.success()));
+
         return future;
     }
 }

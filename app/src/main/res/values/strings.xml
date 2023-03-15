@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">고사성어</string>
+    <string name="main_activity_floating_button_description">next</string>
+    <string name="bottom_app_bar_menuitem_share">공유</string>
 </resources>

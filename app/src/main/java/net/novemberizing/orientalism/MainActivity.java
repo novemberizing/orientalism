@@ -25,6 +25,10 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+
 import net.novemberizing.orientalism.db.article.Article;
 import net.novemberizing.orientalism.db.article.ArticleRepository;
 import net.novemberizing.orientalism.db.article.ArticleViewModel;
@@ -37,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView pronunciation;
     private TextView summary;
     private TextView story;
-    private LinearLayout layout;
+    private BottomAppBar appbar;
+    private FloatingActionButton fab;
 
     private ArticleViewModel model;
 
@@ -50,16 +55,36 @@ public class MainActivity extends AppCompatActivity {
         pronunciation = findViewById(R.id.main_activity_pronunciation);
         story = findViewById(R.id.main_activity_story);
         summary = findViewById(R.id.main_activity_summary);
-        layout = findViewById(R.id.main_activity_layout);
-
-        // layout.setBackgroundResource(R.drawable.bamboo_g0d4e6fe68_1920);
+        appbar = findViewById(R.id.main_activity_bottom_app_bar);
+        fab = findViewById(R.id.main_activity_floating_action_button);
 
         ArticleRepository.recentSync(article -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
+
+        appbar.setOnMenuItemClickListener (item -> {
+            if(item.getItemId() == R.id.bottom_app_bar_menuitem_share) {
+                Log.e(Tag, "bottom app bar menuitem menu click");
+                return true;
+            }
+            return false;
+        });
+
+        fab.setOnClickListener(view -> {
+            Log.e(Tag, "fab click");
+        });
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
 
         LiveData<Article> article = model.recent();
-        LiveData<List<Article>> articles = model.articles();
+
+        Gson gson = OrientalismApplicationGson.get();
+        {
+            String json = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN);
+            Article o = gson.fromJson(json, Article.class);
+            setTitle(o.title);
+            setPronunciation(o.pronunciation);
+            setStory(o.story);
+            setSummary(o.summary);
+        }
 
         article.observe(this, o -> {
             if(o != null) {
@@ -67,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 setPronunciation(o.pronunciation);
                 setStory(o.story);
                 setSummary(o.summary);
+                OrientalismApplicationPreference.set(this, "main", gson.toJson(o));
             }
         });
+
+
         // TODO: VERSION 1 REFACTORING
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String name = new String("net.novemberizing.orientalism");
@@ -107,36 +135,22 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(1001, builder.build());
     }
     private void setTitle(String value) {
-        SpannableString string = new SpannableString(value);
-        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifhk_light);
-        string.setSpan(new RelativeSizeSpan(4f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            Log.e("Simplefeed", "font apply");
-            string.setSpan(new TypefaceSpan(font), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        } else {
-            Log.e("Simplefeed", "font not apply");
-        }
-        title.setText(string);
+        title.setText(value);
     }
 
     private void setPronunciation(String value) {
-        SpannableString string = new SpannableString(value);
-        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        }
-        string.setSpan(new RelativeSizeSpan(1.6f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        pronunciation.setText(string);
+        pronunciation.setText(value);
     }
 
     private void setSummary(String value) {
-        SpannableString string = new SpannableString(value);
-        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        }
-        string.setSpan(new RelativeSizeSpan(1.0f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        summary.setText(string);
+//        SpannableString string = new SpannableString(value);
+//        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
+//        }
+//        string.setSpan(new RelativeSizeSpan(1.0f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
+//        summary.setText(string);
+        summary.setText(value);
     }
 
     public void setStory(String value) {

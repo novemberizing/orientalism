@@ -7,6 +7,9 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.google.gson.Gson;
+
+import net.novemberizing.orientalism.db.article.Article;
 import net.novemberizing.orientalism.db.article.ArticleDailyWorker;
 import net.novemberizing.orientalism.db.article.ArticleRepository;
 
@@ -21,16 +24,8 @@ public class OrientalismApplication extends Application {
         OrientalismApplicationGson.gen();
         OrientalismApplicationDB.gen(this);
         OrientalismApplicationVolley.gen(this);
-
-        // ArticleRepository.refreshSync(articles -> Log.d(Tag, "ArticleRepository.refreshSync(...)"));
-        ArticleRepository.sync(articles -> Log.d(Tag, "ArticleRepository.sync(...)"));
-
-        // 기본 작업 등록
-        WorkManager manager = WorkManager.getInstance(this);
-        PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest.Builder(ArticleDailyWorker.class, 900, TimeUnit.SECONDS);
-
-        manager.enqueueUniquePeriodicWork("unique", ExistingPeriodicWorkPolicy.UPDATE, builder.build());
-        // ;
+        OrientalismApplicationPreference.gen(this);
+        OrientalismApplicationWork.gen(this);
     }
 
     @Override
