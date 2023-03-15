@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="Theme.Orientalism">
         <attr name="realBackground" format="color" />
+<!--        <attr name="dividerColor" format="color" />-->
     </declare-styleable>
 </resources>
