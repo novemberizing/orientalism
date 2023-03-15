@@ -20,4 +20,8 @@ public class StringUtil {
         }
         return builder.toString();
     }
+
+    public static String get(CharSequence o) {
+        return o != null ? o.toString() : null;
+    }
 }

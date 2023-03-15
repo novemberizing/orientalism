@@ -1,101 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/main_activity_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="80dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?attr/colorOnBackground"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/main_activity_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:gravity="center"
+            android:textSize="48sp"
+            android:fontFamily="@font/notoserifhk_light" />
 
-            <LinearLayout
-                android:id="@+id/main_activity_layout"
-                android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/main_activity_pronunciation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:fontFamily="@font/notoserifkr_regular"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/main_activity_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingEnd="32dp"
+            android:paddingStart="32dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:fontFamily="@font/notoserifkr_regular" />
+
+        <TextView
+            android:id="@+id/main_activity_url"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/main_activity_scroll_view"
+        app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation_view"
+        app:layout_constraintTop_toBottomOf="@id/main_activity_layout">
+
+        <TextView
+            android:id="@+id/main_activity_story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_activity_bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="10dp"
+        app:backgroundTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <Button
+                android:id="@+id/main_activity_bottom_navigation_view_button_share"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="?attr/colorOnBackground"
-                android:elevation="3dp">
+                app:icon="@drawable/baseline_share_24"
+                app:iconPadding="4dp"
+                app:iconSize="16dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="0dp"
+                android:text="@string/bottom_app_bar_menuitem_share" />
 
-                <TextView
-                    android:id="@+id/main_activity_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="48sp"
-                    android:fontFamily="@font/notoserifhk_light" />
-
-                <TextView
-                    android:id="@+id/main_activity_pronunciation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/notoserifkr_regular"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
-                    android:id="@+id/main_activity_summary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:paddingEnd="32dp"
-                    android:paddingStart="32dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/notoserifkr_regular" />
-
-            </LinearLayout>
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/main_activity_story"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp" />
-
-            </androidx.core.widget.NestedScrollView>
+            <Button
+                android:id="@+id/main_activity_bottom_navigation_view_button_setting"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_settings_24"
+                app:iconPadding="4dp"
+                app:iconSize="16dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="0dp"
+                android:text="@string/bottom_app_bar_menuitem_setting" />
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/main_activity_bottom_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="bottom"
-        app:backgroundTint="?attr/colorOnBackground"
-        app:elevation="3dp"
-        app:addElevationShadow="true"
-        style="@style/Widget.Material3.BottomAppBar"
-        app:menu="@menu/bottom_app_bar_menu">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_activity_floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            app:srcCompat="@drawable/baseline_arrow_right_24"
+            app:layout_anchor="@id/main_activity_bottom_navigation_view"
+            app:backgroundTint="?attr/colorPrimaryVariant"
+            app:rippleColor="?attr/colorSecondaryVariant"
+            android:layout_marginEnd="16dp"
+            app:elevation="1dp"
+            android:contentDescription="@string/main_activity_floating_button_description" />
 
-    </com.google.android.material.bottomappbar.BottomAppBar>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/main_activity_floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/baseline_arrow_right_24"
-        app:layout_anchor="@id/main_activity_bottom_app_bar"
-        app:backgroundTint="?attr/colorPrimaryVariant"
-        app:rippleColor="?attr/colorSecondaryVariant"
-        android:contentDescription="@string/main_activity_floating_button_description" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

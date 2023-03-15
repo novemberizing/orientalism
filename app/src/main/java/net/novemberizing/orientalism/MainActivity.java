@@ -14,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import net.novemberizing.core.StringUtil;
 import net.novemberizing.orientalism.db.article.Article;
 import net.novemberizing.orientalism.db.article.ArticleRepository;
 import net.novemberizing.orientalism.db.article.ArticleViewModel;
@@ -37,11 +39,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String Tag = "MainActivity";
+    private TextView url;
     private TextView title;
     private TextView pronunciation;
     private TextView summary;
     private TextView story;
-    private BottomAppBar appbar;
+    private Button share;
     private FloatingActionButton fab;
 
     private ArticleViewModel model;
@@ -51,21 +54,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_layout);
 
+        url = findViewById(R.id.main_activity_url);
         title = findViewById(R.id.main_activity_title);
         pronunciation = findViewById(R.id.main_activity_pronunciation);
         story = findViewById(R.id.main_activity_story);
         summary = findViewById(R.id.main_activity_summary);
-        appbar = findViewById(R.id.main_activity_bottom_app_bar);
+        share = findViewById(R.id.main_activity_bottom_navigation_view_button_share);
         fab = findViewById(R.id.main_activity_floating_action_button);
 
         ArticleRepository.recentSync(article -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
 
-        appbar.setOnMenuItemClickListener (item -> {
-            if(item.getItemId() == R.id.bottom_app_bar_menuitem_share) {
-                Log.e(Tag, "bottom app bar menuitem menu click");
-                return true;
+        share.setOnClickListener(view -> {
+            String value = StringUtil.get(url.getText());
+            if(value != null && value.length() > 0) {
+                Log.e(Tag, "share click");
+                Log.e(Tag, value);
             }
-            return false;
         });
 
         fab.setOnClickListener(view -> {
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         {
             String json = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN);
             Article o = gson.fromJson(json, Article.class);
+            setUrl(o.url);
             setTitle(o.title);
             setPronunciation(o.pronunciation);
             setStory(o.story);
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         article.observe(this, o -> {
             if(o != null) {
+                setUrl(o.url);
                 setTitle(o.title);
                 setPronunciation(o.pronunciation);
                 setStory(o.story);
@@ -133,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         notificationManager.notify(1001, builder.build());
+    }
+    private void setUrl(String value) {
+        url.setText(value);
     }
     private void setTitle(String value) {
         title.setText(value);
