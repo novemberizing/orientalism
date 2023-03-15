@@ -71,13 +71,19 @@ public class MainActivity extends AppCompatActivity {
         ArticleRepository.recentSync(o -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
 
         share.setOnClickListener(view -> {
-            String value = StringUtil.get(url.getText());
-            if(value != null && value.length() > 0) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, value);
-                startActivity(Intent.createChooser(intent, value));
-            }
+            String value = StringUtil.get(title.getText()) +
+                    " (" +
+                    StringUtil.get(pronunciation.getText()) +
+                    ")\n\n" +
+                    StringUtil.get(summary.getText()) +
+                    "\n\n" +
+                    StringUtil.get(url.getText());
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, value);
+            startActivity(Intent.createChooser(intent, value));
+
         });
 
         fab.setOnClickListener(view -> {
