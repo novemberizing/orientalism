@@ -7,8 +7,12 @@
 8. NEXT BUTTON 상세 구현
 9. SHARE BUTTON 상세 구현
 10. 설정 구현
-11. 설정을 위한 POPUP 구현하기
-12. Bottom Navigation View border
+
+    알림바 ON/OFF
+    테마적용 (라이트, 다크, 시스템)
+
+12. 설정을 위한 POPUP 구현하기
+14. DARK THEME 적용
 
 ----
 # 설정 컨텐츠

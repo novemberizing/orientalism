@@ -3,4 +3,6 @@
     <string name="main_activity_floating_button_description">next</string>
     <string name="bottom_app_bar_menuitem_share">공유</string>
     <string name="bottom_app_bar_menuitem_setting">설정</string>
+    <string name="bottom_app_bar_menuitem_search">검색</string>
+    <string name="bottom_app_bar_menuitem_sponsor">후원</string>
 </resources>

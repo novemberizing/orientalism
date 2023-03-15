@@ -63,7 +63,12 @@ public class MainActivity extends AppCompatActivity {
         share = findViewById(R.id.main_activity_bottom_navigation_view_button_share);
         fab = findViewById(R.id.main_activity_floating_action_button);
 
-        ArticleRepository.recentSync(article -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
+        model = new ViewModelProvider(this).get(ArticleViewModel.class);
+
+        LiveData<Article> article = model.recent();
+        LiveData<List<Article>> articles = model.articles();
+
+        ArticleRepository.recentSync(o -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
 
         share.setOnClickListener(view -> {
             String value = StringUtil.get(url.getText());
@@ -77,11 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(view -> {
             Log.e(Tag, "fab click");
+            // How to get random content ...
         });
-
-        model = new ViewModelProvider(this).get(ArticleViewModel.class);
-
-        LiveData<Article> article = model.recent();
 
         Gson gson = OrientalismApplicationGson.get();
         {
