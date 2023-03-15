@@ -76,9 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?attr/dividerColor"
-        app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation_view">
-
-    </View>
+        app:layout_constraintBottom_toTopOf="@id/main_activity_bottom_navigation_view" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_activity_bottom_navigation_view"
@@ -100,12 +98,10 @@
 <!--                style="?attr/materialIconButtonStyle"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                app:icon="@drawable/baseline_saved_search_24"-->
-<!--                app:iconPadding="4dp"-->
-<!--                app:iconSize="16dp"-->
-<!--                android:textSize="16sp"-->
-<!--                android:layout_marginEnd="0dp"-->
-<!--                android:text="@string/bottom_app_bar_menuitem_search" />-->
+<!--                app:icon="@drawable/baseline_menu_24"-->
+<!--                app:iconSize="20dp"-->
+<!--                android:layout_marginStart="0dp"-->
+<!--                android:layout_marginEnd="0dp" />-->
 
             <Button
                 android:id="@+id/main_activity_bottom_navigation_view_button_share"
@@ -116,10 +112,11 @@
                 app:iconPadding="4dp"
                 app:iconSize="16dp"
                 android:textSize="16sp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 android:text="@string/bottom_app_bar_menuitem_share" />
 
-                <!-- 컨텐츠가 모이면 적당한 시점에 후원을 넣자. -->
+            <!-- 컨텐츠가 모이면 적당한 시점에 후원을 넣자. -->
 <!--            <Button-->
 <!--                android:id="@+id/main_activity_bottom_navigation_view_button_sponsor"-->
 <!--                style="?attr/materialIconButtonStyle"-->
@@ -129,7 +126,7 @@
 <!--                app:iconPadding="4dp"-->
 <!--                app:iconSize="16dp"-->
 <!--                android:textSize="16sp"-->
-<!--                android:padding="0dp"-->
+<!--                android:layout_marginStart="0dp"-->
 <!--                android:layout_marginEnd="0dp"-->
 <!--                android:text="@string/bottom_app_bar_menuitem_sponsor" />-->
 
@@ -142,11 +139,11 @@
                 app:iconPadding="4dp"
                 app:iconSize="16dp"
                 android:textSize="16sp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 android:text="@string/bottom_app_bar_menuitem_setting" />
 
         </LinearLayout>
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_activity_floating_action_button"

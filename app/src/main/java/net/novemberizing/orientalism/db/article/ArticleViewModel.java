@@ -25,6 +25,8 @@ public class ArticleViewModel extends AndroidViewModel {
         return recent;
     }
 
+
+
     public LiveData<List<Article>> articles() {
         return articles;
     }
