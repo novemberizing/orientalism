@@ -5,6 +5,7 @@ import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -67,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         share.setOnClickListener(view -> {
             String value = StringUtil.get(url.getText());
             if(value != null && value.length() > 0) {
-                Log.e(Tag, "share click");
-                Log.e(Tag, value);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, value);
+                startActivity(Intent.createChooser(intent, value));
             }
         });
 
