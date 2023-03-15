@@ -25,7 +25,9 @@ public class ArticleViewModel extends AndroidViewModel {
         return recent;
     }
 
-
+    public LiveData<Article> random(){
+        return repository.random();
+    }
 
     public LiveData<List<Article>> articles() {
         return articles;

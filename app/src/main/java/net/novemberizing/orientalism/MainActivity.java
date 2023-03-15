@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private Button share;
     private FloatingActionButton fab;
 
+    private LiveData<Article> random = null;
+
     private ArticleViewModel model;
 
     @Override
@@ -68,7 +70,14 @@ public class MainActivity extends AppCompatActivity {
         LiveData<Article> article = model.recent();
         LiveData<List<Article>> articles = model.articles();
 
-        ArticleRepository.recentSync(o -> Log.d(Tag, "ArticleRepository.recentSync(...)"));
+        Gson gson = OrientalismApplicationGson.get();
+
+        ArticleRepository.recentSync(o -> {
+            if(o != null) {
+                Log.d(Tag, "ArticleRepository.recentSync(...)");
+                Log.e(Tag, gson.toJson(o));
+            }
+        });
 
         share.setOnClickListener(view -> {
             String value = StringUtil.get(title.getText()) +
@@ -83,15 +92,26 @@ public class MainActivity extends AppCompatActivity {
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, value);
             startActivity(Intent.createChooser(intent, value));
-
         });
+
+
 
         fab.setOnClickListener(view -> {
             Log.e(Tag, "fab click");
-            // How to get random content ...
+            if(random == null) {
+                random = model.random();
+                random.observe(this, o -> {
+                    setUrl(o.url);
+                    setTitle(o.title);
+                    setPronunciation(o.pronunciation);
+                    setStory(o.story);
+                    setSummary(o.summary);
+                    random = null;
+                });
+            }
         });
 
-        Gson gson = OrientalismApplicationGson.get();
+
         {
             String json = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN);
             Article o = gson.fromJson(json, Article.class);
@@ -104,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         article.observe(this, o -> {
             if(o != null) {
+                Log.e(Tag, gson.toJson(o));
                 setUrl(o.url);
                 setTitle(o.title);
                 setPronunciation(o.pronunciation);

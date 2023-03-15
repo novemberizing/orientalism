@@ -289,6 +289,10 @@ public class ArticleRepository {
         recent = articleDao.recent();
     }
 
+    public LiveData<Article> random() {
+        return articleDao.random();
+    }
+
     public void insert(Article article, Listener<Article> listener) {
         OrientalismApplicationDB.execute(()->{
             try {

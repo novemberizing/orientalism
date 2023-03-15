@@ -8,8 +8,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.text.style.TypefaceSpan;
-import android.util.Log;
 
 import net.novemberizing.core.JsoupUtil;
 import net.novemberizing.core.StringUtil;
@@ -20,7 +18,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class OrientalismApplicationHtml {
-    private static final String Tag = "OrientalismApplicationHtml";
     private static final String paragraphAppendText = "\n\n";
     private static final String paragraphTag = "p";
     private static final String blockquoteTag = "blockquote";
@@ -51,7 +48,7 @@ public class OrientalismApplicationHtml {
         Document document = Jsoup.parse(html);
         Element body = document.body();
         Elements elements = body.children();
-        // for(Element element : elements) {
+
         for(int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
             if(StringUtil.equal(JsoupUtil.str(element.tag()), paragraphTag)) {
@@ -65,14 +62,11 @@ public class OrientalismApplicationHtml {
                     builder.append(text, new QuoteSpan(Color.parseColor(blockquoteColorStr), blockquoteStripeWidth, blockquoteGapWidth), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     builder.setSpan(new StyleSpan(Typeface.ITALIC), builder.length() - text.length(), builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     builder.setSpan(new RelativeSizeSpan(0.8f), builder.length() - text.length(), builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    if(i + 1 != elements.size()) {
-                        builder.append(paragraphAppendText);
-                    }
                 } else {
                     builder.append(element.text());
-                    if(i + 1 != elements.size()) {
-                        builder.append(paragraphAppendText);
-                    }
+                }
+                if(i + 1 != elements.size()) {
+                    builder.append(paragraphAppendText);
                 }
             } else {
                 builder.append(element.text());
