@@ -75,7 +75,6 @@
         android:id="@+id/main_activity_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="10dp"
         app:backgroundTint="?attr/colorOnBackground"
         app:layout_constraintBottom_toBottomOf="parent">
 
