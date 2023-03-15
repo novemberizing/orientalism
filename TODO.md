@@ -7,6 +7,7 @@
 8. NEXT BUTTON 상세 구현
 9. SHARE BUTTON 상세 구현
 10. 설정 구현
+11. 설정을 위한 POPUP 구현하기
 
 ----
 # 설정 컨텐츠
