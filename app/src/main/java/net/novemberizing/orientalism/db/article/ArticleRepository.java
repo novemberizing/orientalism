@@ -289,7 +289,7 @@ public class ArticleRepository {
         recent = articleDao.recent();
     }
 
-    public LiveData<Article> random() {
+    public LiveData<List<Article>> random() {
         return articleDao.random();
     }
 

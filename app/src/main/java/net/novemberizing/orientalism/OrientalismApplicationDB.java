@@ -31,7 +31,6 @@ public abstract class OrientalismApplicationDB extends RoomDatabase {
     }
 
     public static OrientalismApplicationDB get() {
-
         return instance;
     }
 

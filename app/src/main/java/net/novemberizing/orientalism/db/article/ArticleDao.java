@@ -18,8 +18,8 @@ public interface ArticleDao {
     @Query("SELECT COUNT(*) FROM article WHERE category=:category")
     Integer count(Integer category);
 
-    @Query("SELECT * FROM article ORDER BY RANDOM() LIMIT 1")
-    LiveData<Article> random();
+    @Query("SELECT * FROM article ORDER BY RANDOM() LIMIT 2")
+    LiveData<List<Article>> random();
 
     @Insert
     void insert(Article article);
