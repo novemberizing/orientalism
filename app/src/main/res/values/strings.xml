@@ -5,4 +5,12 @@
     <string name="bottom_app_bar_menuitem_setting">설정</string>
     <string name="bottom_app_bar_menuitem_search">검색</string>
     <string name="bottom_app_bar_menuitem_sponsor">후원</string>
+    <string name="bottom_app_bar_menuitem_today">오늘</string>
+
+    <string name="close">닫기</string>
+    <string name="setting_dialog_show_notification">알림보기</string>
+    <string name="setting_dialog_configure_theme">테마설정하기</string>
+    <string name="light">라이트</string>
+    <string name="dark">다크</string>
+    <string name="system">시스템</string>
 </resources>

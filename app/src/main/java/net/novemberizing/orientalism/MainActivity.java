@@ -1,29 +1,37 @@
 package net.novemberizing.orientalism;
 
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+
 import android.Manifest;
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -32,8 +40,8 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import net.novemberizing.core.StringUtil;
@@ -53,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private Button share;
     private FloatingActionButton fab;
     private NestedScrollView scroll;
+    private Button today;
+    private Button setting;
 
     private LiveData<List<Article>> random = null;
 
@@ -61,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity_portrait_layout);
+
+        if(OrientalismApplication.getOrientation(this)==ORIENTATION_PORTRAIT) {
+            setContentView(R.layout.main_activity_portrait_layout);
+        } else {
+            setContentView(R.layout.main_activity_landscape_layout);
+        }
 
         url = findViewById(R.id.main_activity_url);
         title = findViewById(R.id.main_activity_title);
@@ -71,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         share = findViewById(R.id.main_activity_bottom_navigation_view_button_share);
         fab = findViewById(R.id.main_activity_floating_action_button);
         scroll = findViewById(R.id.main_activity_scroll_view);
+        today = findViewById(R.id.main_activity_bottom_navigation_view_button_today);
+        setting = findViewById(R.id.main_activity_bottom_navigation_view_button_setting);
 
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
 
@@ -87,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setting.setOnClickListener(view -> OrientalismApplicationDialog.showSettingDialog(this));
+
         share.setOnClickListener(view -> {
             String value = StringUtil.get(title.getText()) +
                     " (" +
@@ -101,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(Intent.EXTRA_TEXT, value);
             startActivity(Intent.createChooser(intent, value));
         });
+
+
 
         fab.setOnClickListener(view -> {
             Log.e(Tag, "fab click");
@@ -119,9 +140,18 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Log.e(Tag, "why ..... ");
                 });
             }
+        });
+
+        today.setOnClickListener(view -> {
+            article.observe(this, o-> {
+                setUrl(o.url);
+                setTitle(o.title);
+                setPronunciation(o.pronunciation);
+                setStory(o.story);
+                setSummary(o.summary);
+            });
         });
 
 
@@ -147,44 +177,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        OrientalismApplicationNotification.set(this, "징갱취제", "요약");
 
-        // TODO: VERSION 1 REFACTORING
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String name = new String("net.novemberizing.orientalism");
-            String description = new String("hello world");
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("net.novemberizing.orientalism", name, importance);
-            channel.setDescription(description);
-            channel.setShowBadge(false);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "net.novemberizing.orientalism")
-                .setSmallIcon(R.drawable.ic_notification_icon)
-                .setContentTitle("懲羹吹韲")
-                .setContentText("뜨거운 국에 덴 나머지 냉채를 불고 먹는다. 곧 한 번 실패한 것 때문에 모든 일에 지나치게 조심하는 것을 비유하는 말이다.")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSilent(true)
-                .setLocalOnly(true)
-                .setOngoing(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        notificationManager.notify(1001, builder.build());
     }
+
     private void setUrl(String value) {
         url.setText(value);
     }
@@ -221,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(config);
         Log.e(Tag, "=========================> onConfigurationChanged");
         if(config.orientation == ORIENTATION_LANDSCAPE) {
+            // ORIENTATION_PORTRAIT
             Log.e(Tag, "가로모드");
         } else {
             Log.e(Tag, "세로모드");

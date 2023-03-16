@@ -21,6 +21,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY RANDOM() LIMIT 2")
     LiveData<List<Article>> random();
 
+    @Query("SELECT COUNT(*) FROM article")
+    Integer total();
+
     @Insert
     void insert(Article article);
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/setting_dialog_show_notification_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/setting_dialog_show_notification"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_dialog_configure_theme"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/setting_dialog_configure_theme_toggle"
+            app:singleSelection="true"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/setting_dialog_configure_theme_button_light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/light" />
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/setting_dialog_configure_theme_button_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dark" />
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/setting_dialog_configure_theme_button_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/system" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="후원하기"-->
+        <!--            android:layout_marginTop="16dp" />-->
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

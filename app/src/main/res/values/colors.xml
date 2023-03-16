@@ -20,4 +20,6 @@
     <color name="gray_800">#FF424242</color>
     <color name="gray_900">#FF212121</color>
 
+    <color name="transparent">#00FFFFFF</color>
+
 </resources>
