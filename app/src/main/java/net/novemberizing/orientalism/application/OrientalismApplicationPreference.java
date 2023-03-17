@@ -22,6 +22,7 @@ public class OrientalismApplicationPreference {
     public static final String NOTIFICATION = "notification";
     public static final String THEME = "theme";
     public static final String RECENT = "recent";
+    public static final String TODAY = "today";
 
     public static void gen(Context context) {
         Gson gson = OrientalismApplicationGson.get();

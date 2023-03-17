@@ -24,6 +24,12 @@ public class OrientalismApplication extends Application {
         return configuration.orientation;
     }
 
+    @SuppressWarnings("unused")
+    private static void rem(Context context) {
+        context.deleteDatabase(OrientalismApplicationDB.name);
+        OrientalismApplicationPreference.del(context);
+    }
+
     @Override
     public void onCreate(){
         super.onCreate();

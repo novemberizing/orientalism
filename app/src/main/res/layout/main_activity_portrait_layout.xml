@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="48sp"
-            android:fontFamily="@font/notoserifhk_light" />
+            android:fontFamily="@font/noto_serif_hk_light" />
 
         <TextView
             android:id="@+id/main_activity_pronunciation"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="24sp"
-            android:fontFamily="@font/notoserifkr_regular"
+            android:fontFamily="@font/noto_serif_kr_regular"
             android:layout_marginBottom="16dp" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/notoserifkr_regular"
+            android:fontFamily="@font/noto_serif_kr_regular"
             android:gravity="center"
             android:paddingStart="32dp"
             android:paddingEnd="32dp"

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.Gson;
 
 import net.novemberizing.orientalism.OrientalismApplication;
 import net.novemberizing.orientalism.R;
@@ -33,7 +34,9 @@ public class OrientalismApplicationDialog {
         notificationToggleBtn.addOnButtonCheckedListener((group, id, value) -> {
             if(value) {
                 OrientalismApplicationPreference.set(activity, OrientalismApplicationPreference.NOTIFICATION, R.id.setting_dialog_notification_toggle_show);
-                Article article = Article.main();
+                Gson gson = OrientalismApplicationGson.get();
+                String json = OrientalismApplicationPreference.str(activity, OrientalismApplicationPreference.TODAY);
+                Article article = json != null ? gson.fromJson(json, Article.class) : Article.main();
                 OrientalismApplicationNotification.set(activity, article.title,article.summary);
             } else {
                 OrientalismApplicationPreference.set(activity, OrientalismApplicationPreference.NOTIFICATION, 0);

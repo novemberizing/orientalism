@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Article.class}, version = 1)
 @TypeConverters({OrientalismApplicationDBTypeConverter.class})
 public abstract class OrientalismApplicationDB extends RoomDatabase {
-    private static final String name = "orientalism.db";
+    public static final String name = "orientalism.db";
     private static OrientalismApplicationDB instance;
     private static final ExecutorService pool = Executors.newFixedThreadPool(4);
 

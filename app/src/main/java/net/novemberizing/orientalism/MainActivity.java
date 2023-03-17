@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     public void setStory(String value) {
         SpannableStringBuilder builder = OrientalismApplicationHtml.from(value);
         builder.setSpan(new RelativeSizeSpan(1.2f), 0, builder.length(), SPAN_INCLUSIVE_INCLUSIVE);
-        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
+        Typeface font = ResourcesCompat.getFont(this, R.font.noto_serif_kr_regular);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             builder.setSpan(new TypefaceSpan(font), 0, builder.length(), SPAN_INCLUSIVE_INCLUSIVE);
         }
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
             if(!title.equals(article.title)) {
                 runOnUiThread(() -> badge.setVisibility(View.VISIBLE));
             }
+            OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.TODAY, gson.toJson(article));
             OrientalismApplicationNotification.set(this, article.title, article.summary);
         }
     }
