@@ -22,7 +22,7 @@ public abstract class OrientalismApplicationDB extends RoomDatabase {
 
     public static void gen(Context context) {
         synchronized (OrientalismApplicationDB.class) {
-            context.deleteDatabase(name);
+            context.deleteDatabase(name);   // TODO: REMOVE THIS
             if(instance == null) {
                 instance = Room.databaseBuilder(context.getApplicationContext(), OrientalismApplicationDB.class, name)
                         .build();

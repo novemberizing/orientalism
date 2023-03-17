@@ -13,10 +13,8 @@ import java.util.concurrent.TimeUnit;
 public class OrientalismApplicationWork {
     public static void gen(Context context) {
         WorkManager manager = WorkManager.getInstance(context);
-        // TODO: REMOVE THIS BEFORE RELEASE
-        PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest.Builder(ArticleDailyWorker.class, 900, TimeUnit.SECONDS);
-        // TODO: APPLY THIS BEFORE RELEASE
-        // PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest.Builder(ArticleDailyWorker.class, 1, TimeUnit.DAYS);
+
+        PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest.Builder(ArticleDailyWorker.class, 1, TimeUnit.DAYS);
 
         manager.enqueueUniquePeriodicWork("unique", ExistingPeriodicWorkPolicy.UPDATE, builder.build());
     }

@@ -51,6 +51,11 @@
             android:layout_height="0dp"
             android:visibility="invisible" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/dividerColor" />
+
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -103,18 +108,32 @@
 <!--                android:layout_marginStart="0dp"-->
 <!--                android:layout_marginEnd="0dp" />-->
 
-            <Button
-                android:id="@+id/main_activity_bottom_navigation_view_button_today"
-                style="?attr/materialIconButtonStyle"
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/baseline_today_24"
-                app:iconPadding="4dp"
-                app:iconSize="16dp"
-                android:textSize="16sp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:text="@string/bottom_app_bar_menuitem_today" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/main_activity_bottom_navigation_view_button_today"
+                    style="?attr/materialIconButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/baseline_today_24"
+                    app:iconPadding="4dp"
+                    app:iconSize="16dp"
+                    android:textSize="16sp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:text="@string/bottom_app_bar_menuitem_today" />
+
+                <ImageView
+                    android:id="@+id/main_activity_bottom_navigation_view_button_today_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="?attr/todayButtonBadge"
+                    android:layout_gravity="end|center_vertical"
+                    android:contentDescription="@string/main_activity_bottom_navigation_view_button_today_badge_description" />
+
+            </FrameLayout>
 
             <Button
                 android:id="@+id/main_activity_bottom_navigation_view_button_share"

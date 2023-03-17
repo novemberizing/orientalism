@@ -1,21 +1,10 @@
 package net.novemberizing.orientalism;
 
-import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
 
-import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
-import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
-
-import android.Manifest;
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,23 +14,21 @@ import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import net.novemberizing.core.StringUtil;
@@ -58,15 +45,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView pronunciation;
     private TextView summary;
     private TextView story;
-    private Button share;
-    private FloatingActionButton fab;
-    private NestedScrollView scroll;
-    private Button today;
-    private Button setting;
-
+    private ImageView badge;
+    private NestedScrollView scrollView;
     private LiveData<List<Article>> random = null;
-
     private ArticleViewModel model;
+    private LiveData<Article> article = null;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,126 +67,56 @@ public class MainActivity extends AppCompatActivity {
         pronunciation = findViewById(R.id.main_activity_pronunciation);
         story = findViewById(R.id.main_activity_story);
         summary = findViewById(R.id.main_activity_summary);
-        share = findViewById(R.id.main_activity_bottom_navigation_view_button_share);
-        fab = findViewById(R.id.main_activity_floating_action_button);
-        scroll = findViewById(R.id.main_activity_scroll_view);
-        today = findViewById(R.id.main_activity_bottom_navigation_view_button_today);
-        setting = findViewById(R.id.main_activity_bottom_navigation_view_button_setting);
+        scrollView = findViewById(R.id.main_activity_scroll_view);
+        badge = findViewById(R.id.main_activity_bottom_navigation_view_button_today_badge);
 
+        Button shareBtn = findViewById(R.id.main_activity_bottom_navigation_view_button_share);
+        Button todayBtn = findViewById(R.id.main_activity_bottom_navigation_view_button_today);
+        Button settingBtn = findViewById(R.id.main_activity_bottom_navigation_view_button_setting);
+        FloatingActionButton nextBtn = findViewById(R.id.main_activity_floating_action_button);
+        
         model = new ViewModelProvider(this).get(ArticleViewModel.class);
 
-        Log.e(Tag, "=======================================> onCreate(...)");
+        gson = OrientalismApplicationGson.get();
 
-        LiveData<Article> article = model.recent();
+        badge.setVisibility(View.INVISIBLE);
 
-        Gson gson = OrientalismApplicationGson.get();
+        article = model.recent();
 
-        ArticleRepository.recentSync(o -> {
-            if(o != null) {
-                Log.d(Tag, "ArticleRepository.recentSync(...)");
-                Log.e(Tag, gson.toJson(o));
-            }
-        });
+        ArticleRepository.recentSync(this::recentSync);
 
-        setting.setOnClickListener(view -> OrientalismApplicationDialog.showSettingDialog(this));
+        settingBtn.setOnClickListener(this::openSettingDialog);
+        shareBtn.setOnClickListener(this::share);
+        todayBtn.setOnClickListener(this::viewTodayArticle);
+        nextBtn.setOnClickListener(this::viewNextArticle);
 
-        share.setOnClickListener(view -> {
-            String value = StringUtil.get(title.getText()) +
-                    " (" +
-                    StringUtil.get(pronunciation.getText()) +
-                    ")\n\n" +
-                    StringUtil.get(summary.getText()) +
-                    "\n\n" +
-                    StringUtil.get(url.getText());
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, value);
-            startActivity(Intent.createChooser(intent, value));
-        });
-
-
-
-        fab.setOnClickListener(view -> {
-            Log.e(Tag, "fab click");
-            if(random == null) {
-                random = model.random();
-                random.observe(this, list -> {
-                    for(Article item : list) {
-                        if(!item.url.equals(StringUtil.get(url.getText()))) {
-                            setUrl(item.url);
-                            setTitle(item.title);
-                            setPronunciation(item.pronunciation);
-                            setStory(item.story);
-                            setSummary(item.summary);
-                            scroll.fullScroll(ScrollView.FOCUS_UP);
-                            random = null;
-                            return;
-                        }
-                    }
-                });
-            }
-        });
-
-        today.setOnClickListener(view -> {
-            article.observe(this, o-> {
-                setUrl(o.url);
-                setTitle(o.title);
-                setPronunciation(o.pronunciation);
-                setStory(o.story);
-                setSummary(o.summary);
-            });
-        });
-
-
-        {
-            String json = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN);
-            Article o = gson.fromJson(json, Article.class);
-            setUrl(o.url);
-            setTitle(o.title);
-            setPronunciation(o.pronunciation);
-            setStory(o.story);
-            setSummary(o.summary);
-        }
-
-        article.observe(this, o -> {
-            if(o != null) {
-                Log.e(Tag, gson.toJson(o));
-                setUrl(o.url);
-                setTitle(o.title);
-                setPronunciation(o.pronunciation);
-                setStory(o.story);
-                setSummary(o.summary);
-                OrientalismApplicationPreference.set(this, "main", gson.toJson(o));
-            }
-        });
+        setArticle(this, gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class));
 
         OrientalismApplicationNotification.set(this, "징갱취제", "요약");
-
     }
 
+    private void setArticle(Context context, Article article) {
+        if(article != null) {
+            setUrl(article.url);
+            setTitle(article.title);
+            setPronunciation(article.pronunciation);
+            setStory(article.story);
+            setSummary(article.summary);
+            OrientalismApplicationPreference.set(context, OrientalismApplicationPreference.MAIN, gson.toJson(article));
+        }
+    }
     private void setUrl(String value) {
         url.setText(value);
     }
     private void setTitle(String value) {
         title.setText(value);
     }
-
     private void setPronunciation(String value) {
         pronunciation.setText(value);
     }
-
     private void setSummary(String value) {
-//        SpannableString string = new SpannableString(value);
-//        Typeface font = ResourcesCompat.getFont(this, R.font.notoserifkr_regular);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//            string.setSpan(new TypefaceSpan(font), 0, string.length(), SPAN_INCLUSIVE_INCLUSIVE);
-//        }
-//        string.setSpan(new RelativeSizeSpan(1.0f), 0,value.length(), SPAN_INCLUSIVE_INCLUSIVE);
-//        summary.setText(string);
         summary.setText(value);
     }
-
     public void setStory(String value) {
         SpannableStringBuilder builder = OrientalismApplicationHtml.from(value);
         builder.setSpan(new RelativeSizeSpan(1.2f), 0, builder.length(), SPAN_INCLUSIVE_INCLUSIVE);
@@ -212,15 +126,52 @@ public class MainActivity extends AppCompatActivity {
         }
         story.setText(builder);
     }
+    private void share(View view) {
+        String value = StringUtil.get(title.getText()) +
+                " (" +
+                StringUtil.get(pronunciation.getText()) +
+                ")\n\n" +
+                StringUtil.get(summary.getText()) +
+                "\n\n" +
+                StringUtil.get(url.getText());
 
-    public void onConfigurationChanged(@NonNull Configuration config) {
-        super.onConfigurationChanged(config);
-        Log.e(Tag, "=========================> onConfigurationChanged");
-        if(config.orientation == ORIENTATION_LANDSCAPE) {
-            // ORIENTATION_PORTRAIT
-            Log.e(Tag, "가로모드");
-        } else {
-            Log.e(Tag, "세로모드");
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, value);
+        startActivity(Intent.createChooser(intent, value));
+    }
+    private void viewNextArticle(View view) {
+        if(random == null) {
+            random = model.random();
+            random.observe(this, list -> {
+                for(Article item : list) {
+                    if(!item.url.equals(StringUtil.get(url.getText()))) {
+                        setArticle(this, item);
+                        scrollView.fullScroll(ScrollView.FOCUS_UP);
+                        random = null;
+                        return;
+                    }
+                }
+            });
         }
+    }
+    private void viewTodayArticle(View view) {
+        article.observe(this, o-> {
+            setArticle(this, o);
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+            badge.setVisibility(View.INVISIBLE);
+        });
+    }
+    private void recentSync(Article article) {
+        if(article != null) {
+            String title = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.RECENT);
+            if(!title.equals(article.title)) {
+                badge.setVisibility(View.VISIBLE);
+                OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, article.title);
+            }
+        }
+    }
+    private void openSettingDialog(View view) {
+        OrientalismApplicationDialog.showSettingDialog(this);
     }
 }

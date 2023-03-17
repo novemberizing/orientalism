@@ -21,13 +21,19 @@ public class OrientalismApplicationPreference {
     public static final String MAIN = "main";
     public static final String NOTIFICATION = "notification";
     public static final String THEME = "theme";
+    public static final String RECENT = "recent";
 
     public static void gen(Context context) {
         Gson gson = OrientalismApplicationGson.get();
 
+        // OrientalismApplicationPreference.del(context);
+
+        Article article = Article.main();
+
         OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.NOTIFICATION, R.id.setting_dialog_notification_toggle_show);
         OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.THEME, R.id.setting_dialog_configure_theme_button_system);
-        OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.MAIN, gson.toJson(Article.main()));
+        OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.MAIN, gson.toJson(article));
+        OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.RECENT, article.title);
 
         int mode = OrientalismApplicationPreference.integer(context, OrientalismApplicationPreference.THEME, R.id.setting_dialog_configure_theme_button_system);
         if(mode == R.id.setting_dialog_configure_theme_button_dark) {

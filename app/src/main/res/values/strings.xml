@@ -15,4 +15,5 @@
     <string name="system">시스템</string>
     <string name="hide">가리기</string>
     <string name="show">보기</string>
+    <string name="main_activity_bottom_navigation_view_button_today_badge_description">badge</string>
 </resources>

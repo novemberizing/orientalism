@@ -1,19 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Orientalism" parent="Theme.Material3.DayNight">
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/gray_300</item>
+        <item name="colorPrimaryVariant">@color/gray_800</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+
+        <item name="colorSecondary">@color/gray_400</item>
+        <item name="colorSecondaryVariant">@color/gray_900</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <item name="colorOnBackground">@color/gray_900</item>
         <item name="android:statusBarColor">@color/gray_900</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="dividerColor">@color/gray_800</item>
+        <item name="todayButtonBadge">@drawable/baseline_circle_dark_6</item>
         <item name="realBackground">@color/gray_900</item>
     </style>
     <style name="Theme.Orientalism.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Orientalism.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:backgroundDimAmount">0.8</item>
     </style>
 </resources>

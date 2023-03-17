@@ -39,11 +39,8 @@ public class OrientalismApplication extends Application {
         OrientalismApplicationGson.gen();
         OrientalismApplicationDB.gen(this);
         OrientalismApplicationVolley.gen(this);
-        OrientalismApplicationPreference.del(this); // TODO: REMOVE THIS
         OrientalismApplicationPreference.gen(this);
         OrientalismApplicationWork.gen(this);
-
-
     }
 
     @Override

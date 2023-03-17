@@ -102,21 +102,37 @@
 <!--                app:iconSize="20dp"-->
 <!--                android:layout_marginTop="0dp"-->
 <!--                android:layout_marginBottom="0dp" />-->
-
-            <Button
-                android:id="@+id/main_activity_bottom_navigation_view_button_today"
-                style="?attr/materialIconButtonStyle"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/baseline_today_24"
-                app:iconPadding="4dp"
-                app:iconSize="16dp"
-                app:iconGravity="top"
-                android:textSize="16sp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:text="@string/bottom_app_bar_menuitem_today" />
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/main_activity_bottom_navigation_view_button_today"
+                    style="?attr/materialIconButtonStyle"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/baseline_today_24"
+                    app:iconPadding="4dp"
+                    app:iconSize="16dp"
+                    app:iconGravity="top"
+                    android:textSize="16sp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="@string/bottom_app_bar_menuitem_today" />
+
+                <ImageView
+                    android:id="@+id/main_activity_bottom_navigation_view_button_today_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="?attr/todayButtonBadge"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:contentDescription="@string/main_activity_bottom_navigation_view_button_today_badge_description" />
+
+            </FrameLayout>
+
+
 
             <Button
                 android:id="@+id/main_activity_bottom_navigation_view_button_share"

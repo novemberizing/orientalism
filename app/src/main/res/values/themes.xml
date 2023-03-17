@@ -3,17 +3,24 @@
         <item name="colorPrimary">@color/gray_600</item>
         <item name="colorPrimaryVariant">@color/gray_300</item>
         <item name="colorOnPrimary">@color/black</item>
+
         <item name="colorSecondary">@color/gray_700</item>
         <item name="colorSecondaryVariant">@color/gray_400</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <item name="colorOnBackground">@color/gray_100</item>
         <item name="android:statusBarColor">@color/gray_100</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="dividerColor">@color/gray_300</item>
         <item name="realBackground">@color/gray_50</item>
+        <item name="todayButtonBadge">@drawable/baseline_circle_light_6</item>
+        <item name="materialAlertDialogTheme">@style/Theme.Orientalism.Dialog</item>
     </style>
     <style name="Theme.Orientalism.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Orientalism.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:backgroundDimAmount">0.8</item>
     </style>
 </resources>

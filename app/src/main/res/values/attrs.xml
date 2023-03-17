@@ -2,6 +2,6 @@
 <resources>
     <declare-styleable name="Theme.Orientalism">
         <attr name="realBackground" format="color" />
-<!--        <attr name="dividerColor" format="color" />-->
+        <attr name="todayButtonBadge" format="reference" />
     </declare-styleable>
 </resources>

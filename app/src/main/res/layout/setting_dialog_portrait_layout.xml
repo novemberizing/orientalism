@@ -14,35 +14,42 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/setting_dialog_show_notification"
-            android:layout_marginBottom="16dp" />
+            android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/setting_dialog_notification_toggle"
-            app:singleSelection="true"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <Button
-                style="?attr/materialButtonOutlinedStyle"
-                android:id="@+id/setting_dialog_notification_toggle_show"
+            <TextView
+                android:id="@+id/setting_dialog_notification_toggle_show_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/show" />
-            <Button
-                style="?attr/materialButtonOutlinedStyle"
-                android:id="@+id/setting_dialog_notification_toggle_hide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hide" />
+                android:layout_height="match_parent"
+                android:text="@string/setting_dialog_show_notification"
+                android:layout_marginBottom="16dp" />
 
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/setting_dialog_notification_toggle"
+                app:singleSelection="true"
+                android:layout_gravity="center_horizontal|end"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/setting_dialog_notification_toggle_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,8 +60,8 @@
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/setting_dialog_configure_theme_toggle"
             app:singleSelection="true"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
+            android:gravity="end"
+            android:layout_gravity="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
