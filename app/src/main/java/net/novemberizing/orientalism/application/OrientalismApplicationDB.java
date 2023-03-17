@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import net.novemberizing.orientalism.application.db.OrientalismApplicationDBTypeConverter;
 import net.novemberizing.orientalism.db.article.Article;
 import net.novemberizing.orientalism.db.article.ArticleDao;
 

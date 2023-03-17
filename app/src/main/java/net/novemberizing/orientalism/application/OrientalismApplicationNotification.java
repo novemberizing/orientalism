@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application;
 
 import android.Manifest;
 import android.app.NotificationChannel;

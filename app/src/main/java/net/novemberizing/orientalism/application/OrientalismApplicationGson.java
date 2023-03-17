@@ -1,7 +1,9 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import net.novemberizing.orientalism.application.gson.OrientalismApplicationGsonDateAdapter;
 
 import java.util.Date;
 

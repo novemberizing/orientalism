@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application.gson;
 
 import android.util.Log;
 

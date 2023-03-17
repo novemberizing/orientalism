@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import net.novemberizing.orientalism.OrientalismApplication;
 import net.novemberizing.orientalism.R;
 import net.novemberizing.orientalism.db.article.Article;
 

@@ -1,4 +1,4 @@
-package net.novemberizing.orientalism.app;
+package net.novemberizing.orientalism.application.db;
 
 import androidx.room.ProvidedTypeConverter;
 import androidx.room.TypeConverter;
