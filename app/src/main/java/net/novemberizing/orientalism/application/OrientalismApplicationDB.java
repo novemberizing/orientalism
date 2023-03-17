@@ -17,14 +17,14 @@ import java.util.concurrent.Executors;
 @Database(entities = {Article.class}, version = 1)
 @TypeConverters({OrientalismApplicationDBTypeConverter.class})
 public abstract class OrientalismApplicationDB extends RoomDatabase {
-    public static final String name = "orientalism.db";
+    public static final String NAME = "orientalism.db";
     private static OrientalismApplicationDB instance;
     private static final ExecutorService pool = Executors.newFixedThreadPool(4);
 
     public static void gen(Context context) {
         synchronized (OrientalismApplicationDB.class) {
             if(instance == null) {
-                instance = Room.databaseBuilder(context.getApplicationContext(), OrientalismApplicationDB.class, name)
+                instance = Room.databaseBuilder(context.getApplicationContext(), OrientalismApplicationDB.class, NAME)
                         .build();
             }
         }

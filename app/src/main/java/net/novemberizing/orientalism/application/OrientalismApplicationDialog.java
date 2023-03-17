@@ -56,7 +56,6 @@ public class OrientalismApplicationDialog {
 
         builder.setPositiveButton(R.string.close, null);
         builder.setOnDismissListener(dialog -> {
-            Log.e(Tag, "on dismiss");
             if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_dark) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_light) {
@@ -75,15 +74,5 @@ public class OrientalismApplicationDialog {
         AlertDialog dialog = OrientalismApplicationDialog.createSettingDialog(activity);
 
         dialog.show();
-        // dialog.
-
-        Log.e(Tag, "dialog close");
-        if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_dark) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_light) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        }
     }
 }

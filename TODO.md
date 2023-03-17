@@ -4,7 +4,7 @@
 https://play.google.com/console/signup
 
 ---
-# VERSION 2
+# NEXT RELEASE
 
 1. 태블릿 적용
 2. 데스크탑 적용
@@ -16,3 +16,4 @@ https://play.google.com/console/signup
 8. 다른 앱들을 벤치마킹 하자.
 9. 전체 리스트를 보여주도록 하자.
 10. forceSync 시에 있으면 업데이트되도록 하자.
+11. 홈페이지 업그레이드 하자.

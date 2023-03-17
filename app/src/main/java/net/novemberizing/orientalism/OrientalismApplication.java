@@ -26,7 +26,7 @@ public class OrientalismApplication extends Application {
 
     @SuppressWarnings("unused")
     private static void rem(Context context) {
-        context.deleteDatabase(OrientalismApplicationDB.name);
+        context.deleteDatabase(OrientalismApplicationDB.NAME);
         OrientalismApplicationPreference.del(context);
     }
 
