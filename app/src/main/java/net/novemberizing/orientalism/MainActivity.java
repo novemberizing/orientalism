@@ -164,7 +164,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void recentSync(Article article) {
         if(article != null) {
+            Log.e(Tag, "====================> recent check");
             String title = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.RECENT);
+            Log.e(Tag, title);
+            Log.e(Tag, article.title);
             if(!title.equals(article.title)) {
                 badge.setVisibility(View.VISIBLE);
                 OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, article.title);
