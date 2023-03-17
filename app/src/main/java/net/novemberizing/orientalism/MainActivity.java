@@ -175,10 +175,13 @@ public class MainActivity extends AppCompatActivity {
     }
     private void viewTodayArticle(View view) {
         article.observe(this, o-> {
-            setArticle(this, o);
-            OrientalismApplicationNotification.set(this, o.title, o.summary);
-            scrollView.fullScroll(ScrollView.FOCUS_UP);
-            badge.setVisibility(View.INVISIBLE);
+            if(o != null) {
+                setArticle(this, o);
+                OrientalismApplicationNotification.set(this, o.title, o.summary);
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+                badge.setVisibility(View.INVISIBLE);
+                OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, o.title);
+            }
         });
     }
     private void recentSync(Article article) {
@@ -186,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
             String title = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.RECENT);
             if(!title.equals(article.title)) {
                 runOnUiThread(() -> badge.setVisibility(View.VISIBLE));
-                OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, article.title);
             }
             OrientalismApplicationNotification.set(this, article.title, article.summary);
         }

@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class OrientalismApplicationPreference {
     private static final String NAME = "orientalism";
-
     public static final String MAIN = "main";
     public static final String NOTIFICATION = "notification";
     public static final String THEME = "theme";

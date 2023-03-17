@@ -34,6 +34,7 @@ public abstract class OrientalismApplicationDB extends RoomDatabase {
         return instance;
     }
 
+    @SuppressWarnings("unused")
     public static void rem() {
         synchronized (OrientalismApplicationDB.class) {
             instance = null;

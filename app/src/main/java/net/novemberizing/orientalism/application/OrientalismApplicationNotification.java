@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import net.novemberizing.orientalism.R;
 import net.novemberizing.orientalism.MainActivity;
+import net.novemberizing.orientalism.db.article.Article;
 
 public class OrientalismApplicationNotification {
     private static final String NAME = "net.novemberizing.orientalism";
@@ -26,6 +27,12 @@ public class OrientalismApplicationNotification {
 
     private static final Integer REQUEST_CODE = 1000;
     public static final String TITLE = "title";
+
+    public static void gen(Context context) {
+        Article article = Article.main();
+
+        OrientalismApplicationNotification.set(context, article.title, article.summary);
+    }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     public static void set(Context context, String title, String summary){
