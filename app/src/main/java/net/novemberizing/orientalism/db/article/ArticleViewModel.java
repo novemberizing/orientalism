@@ -25,4 +25,8 @@ public class ArticleViewModel extends AndroidViewModel {
     public LiveData<List<Article>> random(){
         return repository.random();
     }
+
+    public LiveData<Article> get(String title) {
+        return repository.get(title);
+    }
 }

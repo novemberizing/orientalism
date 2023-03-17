@@ -24,4 +24,8 @@ public class StringUtil {
     public static String get(CharSequence o) {
         return o != null ? o.toString() : null;
     }
+
+    public static String get(String o, String value) {
+        return o != null ? o : value;
+    }
 }

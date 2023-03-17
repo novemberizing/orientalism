@@ -18,6 +18,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY RANDOM() LIMIT 2")
     LiveData<List<Article>> random();
 
+    @Query("SELECT * FROM article WHERE title=:title LIMIT 1")
+    LiveData<Article> get(String title);
+
     @Insert
     void insert(Article article);
 }

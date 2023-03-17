@@ -89,11 +89,28 @@ public class MainActivity extends AppCompatActivity {
         todayBtn.setOnClickListener(this::viewTodayArticle);
         nextBtn.setOnClickListener(this::viewNextArticle);
 
-        Article recent = gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class);
+        String key = getContentTitle();
+        if(key != null) {
+            LiveData<Article> article = model.get(key);
+            article.observe(this, o -> {
+                if(o != null) {
+                    setArticle(this, o);
+                } else {
+                    setArticle(this, gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class));
+                }
+            });
+        } else {
+            setArticle(this, gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class));
+        }
+    }
 
-        setArticle(this, recent);
+    private String getContentTitle() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            return intent.getStringExtra(OrientalismApplicationNotification.TITLE);
+        }
 
-        OrientalismApplicationNotification.set(this, recent.title, recent.summary);
+        return null;
     }
 
     private void setArticle(Context context, Article article) {
@@ -169,9 +186,9 @@ public class MainActivity extends AppCompatActivity {
             String title = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.RECENT);
             if(!title.equals(article.title)) {
                 runOnUiThread(() -> badge.setVisibility(View.VISIBLE));
-                OrientalismApplicationNotification.set(this, article.title, article.summary);
                 OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, article.title);
             }
+            OrientalismApplicationNotification.set(this, article.title, article.summary);
         }
     }
     private void openSettingDialog(View view) {

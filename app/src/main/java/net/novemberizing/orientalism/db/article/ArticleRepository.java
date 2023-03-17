@@ -292,6 +292,10 @@ public class ArticleRepository {
         return articleDao.random();
     }
 
+    public LiveData<Article> get(String title){
+        return articleDao.get(title);
+    }
+
     public void insert(Article article, Listener<Article> listener) {
         OrientalismApplicationDB.execute(()->{
             try {

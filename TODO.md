@@ -5,12 +5,6 @@
 # BEFORE FIRST RELEASE
 
 1. 전체 테스트
-2. CLEAN SOURCE
-
-    사용하지 않는 리소스 지우기
-
-4. TODO 정리하기
-5. REOMVE WARNING
 6. PROGUARD 적용
 7. GOOGLE PLAY STORE 에 업로드
 
