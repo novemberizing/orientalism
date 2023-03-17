@@ -4,7 +4,7 @@
 https://play.google.com/console/signup
 
 ---
-# NEXT RELEASE
+# NEXT
 
 1. 태블릿 적용
 2. 데스크탑 적용
@@ -17,3 +17,5 @@ https://play.google.com/console/signup
 9. 전체 리스트를 보여주도록 하자.
 10. forceSync 시에 있으면 업데이트되도록 하자.
 11. 홈페이지 업그레이드 하자.
+12. 코틀린을 적용하자.
+13. 컴퍼저를 적용하자.
