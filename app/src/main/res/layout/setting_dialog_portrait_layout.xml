@@ -14,18 +14,35 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/setting_dialog_show_notification_switch"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:text="@string/setting_dialog_show_notification"
+            android:layout_marginBottom="16dp" />
 
-            app:thumbTint="@color/setting_dialog_switch_thumb_tint_color"
-            app:thumbIcon="@drawable/setting_dialog_switch_icon"
-            app:trackTint="@color/setting_dialog_switch_track_tint_color"
-            app:trackDecorationTint="@color/setting_dialog_switch_track_decoration_tint_color"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/setting_dialog_notification_toggle"
+            app:singleSelection="true"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
 
-            android:text="@string/setting_dialog_show_notification"/>
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/setting_dialog_notification_toggle_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show" />
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/setting_dialog_notification_toggle_hide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView
             android:layout_width="match_parent"

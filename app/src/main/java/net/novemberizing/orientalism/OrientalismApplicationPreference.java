@@ -25,7 +25,7 @@ public class OrientalismApplicationPreference {
     public static void gen(Context context) {
         Gson gson = OrientalismApplicationGson.get();
 
-        OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.NOTIFICATION, true);
+        OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.NOTIFICATION, R.id.setting_dialog_notification_toggle_show);
         OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.THEME, R.id.setting_dialog_configure_theme_button_system);
         OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.MAIN, gson.toJson(Article.main()));
 
@@ -36,6 +36,16 @@ public class OrientalismApplicationPreference {
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO);
         } else {
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+    }
+
+    public static void del(Context context, String key, Integer value) {
+        SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        int v = preferences.getInt(key, value);
+        if(v == value) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove(key);
+            editor.apply();
         }
     }
 

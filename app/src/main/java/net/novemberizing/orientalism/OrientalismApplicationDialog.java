@@ -4,6 +4,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -26,25 +27,38 @@ public class OrientalismApplicationDialog {
         } else {
             view = inflater.inflate(R.layout.setting_dialog_landscape_layout, null, false);
         }
+        view = inflater.inflate(R.layout.setting_dialog_portrait_layout, null, false);
 
-        MaterialSwitch notificationSwitchBtn = view.findViewById(R.id.setting_dialog_show_notification_switch);
-        MaterialButtonToggleGroup themeToggleBtn = view.findViewById(R.id.setting_dialog_configure_theme_toggle);
+//        MaterialSwitch notificationSwitchBtn = view.findViewById(R.id.setting_dialog_show_notification_switch);
+        MaterialButtonToggleGroup notificationToggleBtn = view.findViewById(R.id.setting_dialog_notification_toggle);
+        notificationToggleBtn.check(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.NOTIFICATION, R.id.setting_dialog_notification_toggle_show));
+        notificationToggleBtn.addOnButtonCheckedListener((group, id, value) -> {
+            Log.e(Tag, "" + id + ":" + value);
+            if(!value) {
 
-        notificationSwitchBtn.setChecked(OrientalismApplicationPreference.bool(activity, OrientalismApplicationPreference.NOTIFICATION, true));
-        notificationSwitchBtn.setOnCheckedChangeListener((button, value) -> {
-            OrientalismApplicationPreference.set(activity, OrientalismApplicationPreference.NOTIFICATION, value);
-            if(value) {
-                // TODO: 최신 리소스를 가지고 올 것
-                OrientalismApplicationNotification.set(activity, "징갱취제","요약");
-            } else {
-                OrientalismApplicationNotification.cancel(activity);
             }
+            // notificationToggleBtn.
         });
 
-        themeToggleBtn.check(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME, R.id.setting_dialog_configure_theme_button_system));
-        themeToggleBtn.addOnButtonCheckedListener((group, id, value)-> {
+        MaterialButtonToggleGroup themeToggleBtn = view.findViewById(R.id.setting_dialog_configure_theme_toggle);
+
+//        notificationSwitchBtn.setChecked(OrientalismApplicationPreference.bool(activity, OrientalismApplicationPreference.NOTIFICATION, true));
+//        notificationSwitchBtn.setOnCheckedChangeListener((button, value) -> {
+//            OrientalismApplicationPreference.set(activity, OrientalismApplicationPreference.NOTIFICATION, value);
+//            if(value) {
+//                // TODO: 최신 리소스를 가지고 올 것
+//                OrientalismApplicationNotification.set(activity, "징갱취제","요약");
+//            } else {
+//                OrientalismApplicationNotification.cancel(activity);
+//            }
+//        });
+
+        themeToggleBtn.check(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME, 0));
+        themeToggleBtn.addOnButtonCheckedListener((group, id, value) -> {
             if(value) {
                 OrientalismApplicationPreference.set(activity, OrientalismApplicationPreference.THEME, id);
+            } else {
+                OrientalismApplicationPreference.del(activity, OrientalismApplicationPreference.THEME, id);
             }
         });
 
@@ -59,12 +73,23 @@ public class OrientalismApplicationDialog {
         });
 
         builder.setView(view);
+        //
+        // builder.setOn
 
         return builder.create();
     }
 
     public static void showSettingDialog(Activity activity) {
         AlertDialog dialog = OrientalismApplicationDialog.createSettingDialog(activity);
+
         dialog.show();
+        Log.e(Tag, "dialog close");
+        if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_dark) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if(OrientalismApplicationPreference.integer(activity, OrientalismApplicationPreference.THEME) == R.id.setting_dialog_configure_theme_button_light) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
     }
 }

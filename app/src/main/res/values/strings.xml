@@ -13,4 +13,6 @@
     <string name="light">라이트</string>
     <string name="dark">다크</string>
     <string name="system">시스템</string>
+    <string name="hide">가리기</string>
+    <string name="show">보기</string>
 </resources>
