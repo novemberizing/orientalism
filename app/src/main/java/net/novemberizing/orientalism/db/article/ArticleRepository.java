@@ -13,9 +13,9 @@ import com.google.gson.JsonElement;
 import net.novemberizing.core.GsonUtil;
 import net.novemberizing.core.JsoupUtil;
 import net.novemberizing.core.objects.Listener;
-import net.novemberizing.orientalism.OrientalismApplicationDB;
-import net.novemberizing.orientalism.OrientalismApplicationGson;
-import net.novemberizing.orientalism.OrientalismApplicationVolley;
+import net.novemberizing.orientalism.app.OrientalismApplicationDB;
+import net.novemberizing.orientalism.app.OrientalismApplicationGson;
+import net.novemberizing.orientalism.app.OrientalismApplicationVolley;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

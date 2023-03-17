@@ -27,6 +27,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import net.novemberizing.core.StringUtil;
+import net.novemberizing.orientalism.app.OrientalismApplication;
+import net.novemberizing.orientalism.app.OrientalismApplicationDialog;
+import net.novemberizing.orientalism.app.OrientalismApplicationGson;
+import net.novemberizing.orientalism.app.OrientalismApplicationHtml;
+import net.novemberizing.orientalism.app.OrientalismApplicationNotification;
+import net.novemberizing.orientalism.app.OrientalismApplicationPreference;
 import net.novemberizing.orientalism.db.article.Article;
 import net.novemberizing.orientalism.db.article.ArticleRepository;
 import net.novemberizing.orientalism.db.article.ArticleViewModel;

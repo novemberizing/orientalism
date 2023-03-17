@@ -1,16 +1,17 @@
-3. TODO 적용
-4. 전체 테스트
 6. 버전 정보를 넣자.(고민)
 
 ----
 # BEFORE FIRST RELEASE
 
-1. CLEAN SOURCE
-2. 사용하지 않은 주석 없애고, 주석달기
-3. TODO 정리하기
-4. REOMVE WARNING
-5. PROGUARD 적용
-6. GOOGLE PLAY STORE 에 업로드
+1. 전체 테스트
+2. CLEAN SOURCE
+
+    사용하지 않는 리소스 지우기
+
+4. TODO 정리하기
+5. REOMVE WARNING
+6. PROGUARD 적용
+7. GOOGLE PLAY STORE 에 업로드
 
 ---
 # VERSION 2
