@@ -18,11 +18,10 @@ import java.util.concurrent.Executors;
 public abstract class OrientalismApplicationDB extends RoomDatabase {
     private static final String name = "orientalism.db";
     private static OrientalismApplicationDB instance;
-    private static ExecutorService pool = Executors.newFixedThreadPool(4);
+    private static final ExecutorService pool = Executors.newFixedThreadPool(4);
 
     public static void gen(Context context) {
         synchronized (OrientalismApplicationDB.class) {
-            context.deleteDatabase(name);   // TODO: REMOVE THIS
             if(instance == null) {
                 instance = Room.databaseBuilder(context.getApplicationContext(), OrientalismApplicationDB.class, name)
                         .build();

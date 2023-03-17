@@ -11,23 +11,18 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TypefaceSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -39,7 +34,6 @@ import net.novemberizing.orientalism.db.article.ArticleViewModel;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String Tag = "MainActivity";
     private TextView url;
     private TextView title;
     private TextView pronunciation;
@@ -90,9 +84,11 @@ public class MainActivity extends AppCompatActivity {
         todayBtn.setOnClickListener(this::viewTodayArticle);
         nextBtn.setOnClickListener(this::viewNextArticle);
 
-        setArticle(this, gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class));
+        Article recent = gson.fromJson(OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.MAIN), Article.class);
 
-        OrientalismApplicationNotification.set(this, "징갱취제", "요약");
+        setArticle(this, recent);
+
+        OrientalismApplicationNotification.set(this, recent.title, recent.summary);
     }
 
     private void setArticle(Context context, Article article) {
@@ -158,18 +154,17 @@ public class MainActivity extends AppCompatActivity {
     private void viewTodayArticle(View view) {
         article.observe(this, o-> {
             setArticle(this, o);
+            OrientalismApplicationNotification.set(this, o.title, o.summary);
             scrollView.fullScroll(ScrollView.FOCUS_UP);
             badge.setVisibility(View.INVISIBLE);
         });
     }
     private void recentSync(Article article) {
         if(article != null) {
-            Log.e(Tag, "====================> recent check");
             String title = OrientalismApplicationPreference.str(this, OrientalismApplicationPreference.RECENT);
-            Log.e(Tag, title);
-            Log.e(Tag, article.title);
             if(!title.equals(article.title)) {
-                badge.setVisibility(View.VISIBLE);
+                runOnUiThread(() -> badge.setVisibility(View.VISIBLE));
+                OrientalismApplicationNotification.set(this, article.title, article.summary);
                 OrientalismApplicationPreference.set(this, OrientalismApplicationPreference.RECENT, article.title);
             }
         }

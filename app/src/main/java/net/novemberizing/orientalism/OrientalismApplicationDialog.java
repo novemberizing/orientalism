@@ -4,7 +4,6 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 import android.app.Activity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
@@ -19,13 +18,12 @@ public class OrientalismApplicationDialog {
     private static final String Tag = "OrientalismApplicationDialog";
     public static AlertDialog createSettingDialog(Activity activity) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity, R.style.Theme_Orientalism_Dialog);
-        LayoutInflater inflater = activity.getLayoutInflater();
         View view;
 
         if(OrientalismApplication.getOrientation(activity)==ORIENTATION_PORTRAIT) {
-            view = inflater.inflate(R.layout.setting_dialog_portrait_layout, null, false);
+            view = View.inflate(activity, R.layout.setting_dialog_portrait_layout, null);
         } else {
-            view = inflater.inflate(R.layout.setting_dialog_landscape_layout, null, false);
+            view = View.inflate(activity, R.layout.setting_dialog_landscape_layout, null);
         }
 
         MaterialButtonToggleGroup notificationToggleBtn = view.findViewById(R.id.setting_dialog_notification_toggle);

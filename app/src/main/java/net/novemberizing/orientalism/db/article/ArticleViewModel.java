@@ -8,16 +8,13 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class ArticleViewModel extends AndroidViewModel {
-    private ArticleRepository repository;
-
-    private final LiveData<List<Article>> articles;
+    private final ArticleRepository repository;
     private final LiveData<Article> recent;
 
     public ArticleViewModel(Application application) {
         super(application);
 
         repository = new ArticleRepository();
-        articles = repository.articles();
         recent = repository.recent();
     }
 
@@ -27,13 +24,5 @@ public class ArticleViewModel extends AndroidViewModel {
 
     public LiveData<List<Article>> random(){
         return repository.random();
-    }
-
-    public LiveData<List<Article>> articles() {
-        return articles;
-    }
-
-    public void insert(Article article) {
-        repository.insert(article, null);
     }
 }

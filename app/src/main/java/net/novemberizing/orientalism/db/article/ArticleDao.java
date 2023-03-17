@@ -9,9 +9,6 @@ import java.util.List;
 
 @Dao
 public interface ArticleDao {
-    @Query("SELECT * FROM article ORDER BY datetime DESC")
-    LiveData<List<Article>> all();
-
     @Query("SELECT * FROM article ORDER BY datetime DESC LIMIT 1")
     LiveData<Article> recent();
 
@@ -21,12 +18,6 @@ public interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY RANDOM() LIMIT 2")
     LiveData<List<Article>> random();
 
-    @Query("SELECT COUNT(*) FROM article")
-    Integer total();
-
     @Insert
     void insert(Article article);
-
-//    @Delete
-//    void delete(Article article);
 }

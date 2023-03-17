@@ -6,18 +6,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.Log;
 
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-
-import com.google.gson.Gson;
-
-import net.novemberizing.orientalism.db.article.Article;
-import net.novemberizing.orientalism.db.article.ArticleDailyWorker;
-import net.novemberizing.orientalism.db.article.ArticleRepository;
-
-import java.util.concurrent.TimeUnit;
-
 public class OrientalismApplication extends Application {
     public static final String Tag = "OrientalismApplication";
 

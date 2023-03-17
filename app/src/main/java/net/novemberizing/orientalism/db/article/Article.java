@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 
 import net.novemberizing.core.DateUtil;
 import net.novemberizing.core.FileUtil;
-import net.novemberizing.orientalism.ExampleContent;
 
 import java.io.File;
 import java.util.Date;

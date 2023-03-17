@@ -26,8 +26,6 @@ public class OrientalismApplicationPreference {
     public static void gen(Context context) {
         Gson gson = OrientalismApplicationGson.get();
 
-        // OrientalismApplicationPreference.del(context);
-
         Article article = Article.main();
 
         OrientalismApplicationPreference.gen(context, OrientalismApplicationPreference.NOTIFICATION, R.id.setting_dialog_notification_toggle_show);
@@ -55,6 +53,7 @@ public class OrientalismApplicationPreference {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void del(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         Map<String, ?> map = preferences.getAll();
@@ -71,16 +70,6 @@ public class OrientalismApplicationPreference {
         if(map.get(key) == null) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(key, value);
-            editor.apply();
-        }
-    }
-
-    public static void gen(Context context, String key, Boolean value) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
-        Map<String, ?> map = preferences.getAll();
-        if(map.get(key) == null) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(key, value);
             editor.apply();
         }
     }
@@ -102,13 +91,6 @@ public class OrientalismApplicationPreference {
         editor.apply();
     }
 
-    public static void set(Context context, String key, Boolean value) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
-    }
-
     public static void set(Context context, String key, String value) {
         SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -119,18 +101,6 @@ public class OrientalismApplicationPreference {
     public static String str(Context context, String key) {
         SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return preferences.getString(key, null);
-    }
-
-    public static Boolean bool(Context context, String key) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
-
-        return preferences.getBoolean(key, false);
-    }
-
-    public static Boolean bool(Context context, String key, Boolean defaultValue) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
-
-        return preferences.getBoolean(key, defaultValue);
     }
 
     public static Integer integer(Context context, String key) {

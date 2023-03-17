@@ -15,7 +15,6 @@ import net.novemberizing.core.JsoupUtil;
 import net.novemberizing.core.objects.Listener;
 import net.novemberizing.orientalism.OrientalismApplicationDB;
 import net.novemberizing.orientalism.OrientalismApplicationGson;
-import net.novemberizing.orientalism.OrientalismApplicationRandom;
 import net.novemberizing.orientalism.OrientalismApplicationVolley;
 
 import java.util.ArrayList;
@@ -86,6 +85,7 @@ public class ArticleRepository {
         }
     }
 
+    @SuppressWarnings("unused")
     public static void sync(Listener<List<Article>> listener) {
         synchronized (ArticleRepository.class) {
             if(requestFutureSync == null) {
@@ -279,14 +279,12 @@ public class ArticleRepository {
     }
 
     private final ArticleDao articleDao;
-    private final LiveData<List<Article>> articles;
     private final LiveData<Article> recent;
 
     public ArticleRepository() {
         OrientalismApplicationDB db = OrientalismApplicationDB.get();
 
         articleDao = db.articleDao();
-        articles = articleDao.all();
         recent = articleDao.recent();
     }
 
@@ -311,10 +309,6 @@ public class ArticleRepository {
 
     public LiveData<Article> recent(){
         return recent;
-    }
-
-    public LiveData<List<Article>> articles(){
-        return articles;
     }
 
     public Integer count(Integer category) {
