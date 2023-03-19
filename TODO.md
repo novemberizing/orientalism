@@ -1,9 +1,4 @@
 ---
-# RELEASE
-
-https://play.google.com/console/signup
-
----
 # NEXT
 
 1. 태블릿 적용
