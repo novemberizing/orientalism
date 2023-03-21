@@ -13,15 +13,15 @@
         <meta property="og:image" content="https://novemberizing.github.io/orientalism{{ page.cover | default: '/%E6%95%85%E4%BA%8B%E6%88%90%E8%AA%9E.png' }}" />
         <meta property="og:image:secure_url" content="https://novemberizing.github.io/orientalism{{ page.cover | default: '/%E6%95%85%E4%BA%8B%E6%88%90%E8%AA%9E.png' }}" />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="{{ page.coverwidth }}" />
-        <meta property="og:image:height" content="{{ page.coverheight }}" />
-        <meta property="og:image:alt" content="{{ page.title }}" />
+        <meta property="og:image:width" content="{{ page.coverwidth | default: 1200 }}" />
+        <meta property="og:image:height" content="{{ page.coverheight | default: 630 }}" />
+        <meta property="og:image:alt" content="{{ page.title | default: '故事成語' }}" />
         <meta name="twitter:card" content="photo">
         <meta name="twitter:title" content="{{ page.title }}">
         <meta name="twitter:description" content="{{ page.subtitle }}">
         <meta name="twitter:image" content="https://novemberizing.github.io/orientalism{{ page.twitter | default: '/%E6%95%85%E4%BA%8B%E6%88%90%E8%AA%9E.twitter.png' }}">
         <meta name="twitter:creator" content="@novemberizing">
-        <meta name="twitter:site" content="https://novemberizing.github.io/orientalism/">
+        <meta name="twitter:site" content="https://novemberizing.github.io/orientalism{{ page.url }}">
         <title>{{ page.title }}</title>
         <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
         <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
