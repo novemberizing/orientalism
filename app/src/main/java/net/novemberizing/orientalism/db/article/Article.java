@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 import net.novemberizing.core.DateUtil;
 import net.novemberizing.core.FileUtil;
 
@@ -41,17 +43,24 @@ public class Article {
     @PrimaryKey(autoGenerate = true)
     public int uid;
     @ColumnInfo(name = "url")
+    @SerializedName("url")
     public String url;
     @ColumnInfo(name = "title")
+    @SerializedName("title")
     public String title;
     @ColumnInfo(name = "pronunciation")
+    @SerializedName("pronunciation")
     public String pronunciation;
     @ColumnInfo(name = "summary")
+    @SerializedName("summary")
     public String summary;
     @ColumnInfo(name = "story")
+    @SerializedName("story")
     public String story;
     @ColumnInfo(name = "datetime")
+    @SerializedName("datetime")
     public Date datetime;
     @ColumnInfo(name = "category")
+    @SerializedName("category")
     public Integer category;
 }

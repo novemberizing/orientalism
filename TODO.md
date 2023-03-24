@@ -1,4 +1,8 @@
 ---
+
+인터넷에서 등록된 고사성어를 다운로드 받지 못하는 버그 수정 : https://stackoverflow.com/questions/30001674/gson-deserialize-null-pointer-in-released-apk
+
+---
 # NEXT
 
 1. 태블릿 적용
