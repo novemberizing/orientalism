@@ -1,12 +1,13 @@
 ---
 
-인터넷에서 등록된 고사성어를 다운로드 받지 못하는 버그 수정 : https://stackoverflow.com/questions/30001674/gson-deserialize-null-pointer-in-released-apk
+- 인터넷에서 등록된 고사성어를 다운로드 받지 못하는 버그 수정 : https://stackoverflow.com/questions/30001674/gson-deserialize-null-pointer-in-released-apk
 
 ---
 # NEXT
 
 크리티컬:
-    1. 갤럭시탭에서 실행하자마자 앱이 비정상 종료하였다. (VERSION 3) 다시 설치하자.
+
+        1. 갤럭시탭에서 실행하자마자 앱이 비정상 종료하였다. (VERSION 3) 다시 설치하자.
 
 1. 태블릿 적용
 2. 데스크탑 적용
